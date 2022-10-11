@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='assets/base.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='assets/mtview.css') }}">
+
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div id="app-container">
+        {# Left column #}
+        <div id="left-column" class="three columns">
+            {% block description_card %} {% endblock %}
+            {% block control_card %} {% endblock %}
+        </div>
+
+        {# Right column #}
+        <div id="right-column" class="nine columns" hidden="hidden">
+            {# Window controller #}
+            <div id="window-controller">
+                <b>Window</b>
+                <hr>
+                <div class="tab">
+                    {% for key, val in analysis_tools.items() %}
+                        <button class="window-rb">{{ val }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# Analysis windows #}
+            <div id="windows">
+                {% block analysis_card %} {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

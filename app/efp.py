@@ -1,8 +1,7 @@
 import numpy as np
 import cv2
 
-import VALUES
-import utils
+from app import VALUES
 
 
 class efp:
@@ -11,7 +10,6 @@ class efp:
         self.contours = None
         self.images_mask = None
 
-    @utils.timed
     def read_data(self):
         data_path = 'Images/Layers/mtr_'
         self.contours = cv2.imread('static/Images/mtr_contours.png', cv2.IMREAD_UNCHANGED)

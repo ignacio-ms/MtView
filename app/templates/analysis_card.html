@@ -1,0 +1,8 @@
+{% extends 'control_card.html' %}
+{% block analysis_card %}
+    <div id="analysis-card">
+        {% for key, val in analysis_tools.items() %}
+            <div id={{ val }}+"-div"></div>
+        {% endfor %}
+    </div>
+{% endblock %}

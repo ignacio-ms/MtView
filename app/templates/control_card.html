@@ -1,0 +1,24 @@
+{% extends 'description_card.html' %}
+{% block control_card %}
+    <div id="control-card">
+        <label for="gene-in">Enter gene name</label><input id="gene-in" type="text" value="MtrunA17_Chr3g0110971" style="width: 100%">
+        <br>
+        <button id="submit-gene-btt" style="width: 100%">Search</button>
+        <div id="gene-found"></div>
+        <br>
+
+        <div id="experiment-div" hidden="hidden">
+            <label for="experiments-dd">Select experiments</label><select id="experiments-dd" multiple="multiple">
+                {% for experiment in experiments %}
+                    <option value={{ experiment }}>{{ experiment }}</option>
+                {% endfor %}
+            </select>
+            <br>
+
+            <p>Select normalization method</p>
+            {% for norm in norm_methods %}
+                <label for=name="mode-rb">{{ norm }}</label><input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
