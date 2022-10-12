@@ -41,13 +41,50 @@ hr {
     font-size: 10pt;
 }
 
-#window-rb .tab {
-    padding: 15px;
+.window-rb {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
-#window-rb .tab--selected {
-    border-top: solid 2px #ffa400;
-    color: #ffa400;
+.window-rb label {
+    width: 9.1%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem 2rem;
+	margin-right: 0.0625rem;
+	cursor: pointer;
+	background-color: #F3F3F2;
+	color: #000;
+	font-family: Roboto, sans-serif;
+	font-size: 1.2rem;
+	font-weight: 700;
+	transition: background-color ease 0.3s;
+}
+
+.tabs .tab-content {
+	flex-grow: 1;
+	width: 100%;
+	height: 100%;
+	display: none;
+	padding: 1rem 2rem;
+	color: #000;
+	background-color: #fff;
+}
+
+.window-rb [type=radio] {
+    display: none;
+}
+
+.window-rb [type=radio]:checked + label {
+    background-color: #fff;
+	color: #ffa400;
+	border-top: 4px solid #ffa400;
+}
+
+.window-rb [type=radio]:checked + label + .tab {
+	display: block;
 }
 
 H5 {

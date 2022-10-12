@@ -7,18 +7,31 @@
         <div id="gene-found"></div>
         <br>
 
-        <div id="experiment-div" hidden="hidden">
-            <label for="experiments-dd">Select experiments</label><select id="experiments-dd" multiple="multiple">
-                {% for experiment in experiments %}
-                    <option value={{ experiment }}>{{ experiment }}</option>
-                {% endfor %}
-            </select>
-            <br>
+        {% if experiemnt_div %}
+            <div id="experiment-div">
+                <label for="experiments-dd">Select experiments</label>
+                <select id="experiments-dd" style="width: 100%; height: 205px" multiple>
+                    {% for experiment in experiments %}
+                        {% if experiment == 'SRP362799' %}
+                            <option value={{ experiment }} selected>{{ experiment }}</option>
+                        {% else %}
+                            <option value={{ experiment }}>{{ experiment }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
 
-            <p>Select normalization method</p>
-            {% for norm in norm_methods %}
-                <label for=name="mode-rb">{{ norm }}</label><input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
-            {% endfor %}
-        </div>
+                <br>
+                <p>Select normalization method</p>
+                {% for norm in norm_methods %}
+                    {% if norm == 'log2_tmm' %}
+                        <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked="checked">
+                    {% else %}
+                        <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
+                    {% endif %}
+                    <label for=name="mode-rb" style="display: inline">{{ norm }}</label><br>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

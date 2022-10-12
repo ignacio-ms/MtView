@@ -1,9 +1,6 @@
 from flask import Flask
-from app import taxonomy, efp
-
+from app.models import efp, taxonomy
 
 app = Flask(__name__)
-taxonomy = taxonomy.Taxonomy()
-efp = efp.efp()
 
-from app import views, utils, VALUES
+from app import views, utils, values

@@ -1,9 +1,13 @@
 experiments = ['SRP362799', 'ERP126041', 'SRP013555', 'SRP139359', 'SRP212693', 'SRP159219', 'SRP230996', 'SRP363570', 'SRP161571', 'SRP189439']
 norm_methods = ['log2_tmm', 'tmm']
 
-analysis_tools = {'Taxonomy': 'taxonomy', 'Expression values': 'boxplot', 'eFP': 'eFP', 'Cell eFP': 'cell-eFP', 'Molecule viewer': 'molecule', 'Heatmap': 'heatmap', 'Chromosome viewer': 'chr', 'Interactions': 'interactions'}
-
 colors = ['slategray', '#ffa400', 'crimson']
+
+analysis_tools = {
+    'Taxonomy': 'taxonomy', 'Expression values': 'boxplot',
+    'eFP': 'eFP', 'Cell eFP': 'cell-eFP', 'Molecule viewer': 'molecule',
+    'Heatmap': 'heatmap', 'Chromosome': 'chr', 'Interactions': 'interactions'
+}
 
 img_labels = [
     'flower', 'pod', 'vegetive_bud',
