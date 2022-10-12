@@ -22,22 +22,7 @@
                 <div id="window-controller">
                     <b>Window</b>
                     <hr>
-                    <div class="window-rb">
-                        {% for key, val in analysis_tools.items() %}
-                            {% if val == 'taxonomy' %}
-                                <input type="radio" id={{ val }} name="window-rb" value={{ val }} checked="checked">
-                            {% else %}
-                                <input type="radio" id={{ val }} name="window-rb" value={{ val }}>
-                            {% endif %}
-                            <label for={{ val }}>{{ key }}</label><br>
-                            <div class="tab-content"></div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                {# Analysis windows #}
-                <div id="windows">
-                    {% block analysis_card %} {% endblock %}
+                    {% include 'analysis_card.html' %}
                 </div>
             </div>
         {% endif %}

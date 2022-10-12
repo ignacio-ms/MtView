@@ -1,0 +1,7 @@
+<div id="taxonomy-div">
+    <ul>
+        {% for column in taxonomy.taxonomy.columns %}
+            <li>{{ column }}: {{ taxonomy.taxonomy[column] }}</li>
+        {% endfor %}
+    </ul>
+</div>

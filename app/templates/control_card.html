@@ -1,10 +1,13 @@
 {% extends 'description_card.html' %}
 {% block control_card %}
     <div id="control-card">
-        <label for="gene-in">Enter gene name</label><input id="gene-in" type="text" value="MtrunA17_Chr3g0110971" style="width: 100%">
-        <br>
-        <button id="submit-gene-btt" style="width: 100%">Search</button>
-        <div id="gene-found"></div>
+        <form action="/index" method="post" name="gene-form">
+            <label for="gene-in">Enter gene name</label>
+                {{ form.gene_name() }}
+            <br>
+            <input id="submit-gene-btt" type="submit" value="Search" style="width: 100%">
+        </form>
+        <div id="gene-found">{{ gene_found }}</div>
         <br>
 
         {% if experiemnt_div %}

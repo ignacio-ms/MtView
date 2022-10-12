@@ -1,8 +1,34 @@
-{% extends 'control_card.html' %}
-{% block analysis_card %}
-    <div id="analysis-card">
-        {% for key, val in analysis_tools.items() %}
-            <div id={{ val }}+"-div"></div>
-        {% endfor %}
-    </div>
-{% endblock %}
+<div class="window-rb">
+    <input type="radio" id='taxonomy' name="window-rb" value='taxonomy' checked>
+    <label for='taxonomy'>Taxonomy</label><br>
+
+    <input type="radio" id='boxplot' name="window-rb" value='boxplot'>
+    <label for='boxplot'>Expression value</label><br>
+
+    <input type="radio" id='eFP' name="window-rb" value='eFP'>
+    <label for='eFP'>eFP</label><br>
+
+    <input type="radio" id='cell-eFP' name="window-rb" value='cell-eFP'>
+    <label for='cell-eFP'>Cell eFP</label><br>
+
+    <input type="radio" id='molecule' name="window-rb" value='molecule'>
+    <label for='molecule'>Molecule viewer</label><br>
+
+    <input type="radio" id='heatmap' name="window-rb" value='heatmap'>
+    <label for='heatmap'>Heatmap</label><br>
+
+    <input type="radio" id='chr' name="window-rb" value='chr'>
+    <label for='chr'>Chromosome</label><br>
+
+    <input type="radio" id='interactions' name="window-rb" value='interactions'>
+    <label for='interactions'>Interactions</label><br>
+
+    <div id="tab-content--1" class="tab-content">{% include 'windows/taxonomy-div.html' %}</div>
+    <div id="tab-content--2" class="tab-content">{% include 'windows/boxplot-div.html' %}</div>
+    <div id="tab-content--3" class="tab-content">{% include 'windows/eFP-div.html' %}</div>
+    {#    <div class="tab-content">{% include 'windows/-div.html' %}</div>#}
+    {#    <div class="tab-content">{% include 'windows/-div.html' %}</div>#}
+    {#    <div class="tab-content">{% include 'windows/-div.html' %}</div>#}
+    {#    <div class="tab-content">{% include 'windows/-div.html' %}</div>#}
+    {#    <div class="tab-content">{% include 'windows/-div.html' %}</div>#}
+</div>
