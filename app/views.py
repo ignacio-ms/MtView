@@ -13,10 +13,11 @@ def index():
     form = GeneForm()
     if request.method == 'POST':
         if form.validate():
-            fs_taxonomy = taxonomy.get_gene_taxonomy(form.gene_name.data)
-            fs_expression = taxonomy.get_gene_expression(form.gene_name.data)
+            fs_taxonomy = taxonomy.get_gene_taxonomy(request.form['gene_name'])
+            fs_expression = taxonomy.get_gene_expression(request.form['gene_name'])
             if not fs_taxonomy and not fs_expression:
                 gene_found = 'Gene not found'
+                cols = False
             else:
                 gene_found = 'Gene found'
                 cols = True

@@ -1,7 +1,11 @@
 <div id="taxonomy-div">
-    <ul>
-        {% for column in taxonomy.taxonomy.columns %}
-            <li>{{ column }}: {{ taxonomy.taxonomy[column] }}</li>
+    <dl>
+        {% for key, val in taxonomy.taxonomy.iteritems() %}
+            {% if key != 'Sequence' %}
+                <dt>{{ key }}: </dt>
+                <dd>{{ val[0] }}</dd>
+            {% endif %}
+            <br>
         {% endfor %}
-    </ul>
+    </dl>
 </div>
