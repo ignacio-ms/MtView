@@ -1,0 +1,1 @@
+worker: python /tmp/run.py

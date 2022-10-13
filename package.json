@@ -2,12 +2,5 @@
   "name": "MtView",
   "version": "1.0.0",
   "dependencies": {
-  },
-  "engines": {
-    "npm": "8.15.0",
-    "node": "16.17.1"
-  },
-  "scripts": {
-    "start": "./tmp/run.py"
   }
 }
