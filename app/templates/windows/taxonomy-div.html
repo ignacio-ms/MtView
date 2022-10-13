@@ -1,10 +1,8 @@
 <div id="taxonomy-div">
     <dl>
         {% for key, val in taxonomy.taxonomy.iteritems() %}
-            {% if key != 'Sequence' %}
                 <dt>{{ key }}: </dt>
                 <dd>{{ val[0] }}</dd>
-            {% endif %}
             <br>
         {% endfor %}
     </dl>

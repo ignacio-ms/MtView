@@ -3,7 +3,7 @@
     <div id="control-card">
         <form action="/index" method="post" name="gene-form">
             <label for="gene-in">Enter gene name</label>
-                {{ form.gene_name() }}
+                {{ gene_form.gene_name() }}
             <br>
             <input id="submit-gene-btt" type="submit" value="Search" style="width: 100%">
         </form>
@@ -26,14 +26,16 @@
 
                 <br>
                 <p>Select normalization method</p>
-                {% for norm in norm_methods %}
+                <div class="mode-rb">
+                    {% for norm in norm_methods %}
                     {% if norm == 'log2_tmm' %}
-                        <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked="checked">
+                        <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked>
                     {% else %}
                         <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
                     {% endif %}
-                    <label for=name="mode-rb" style="display: inline">{{ norm }}</label><br>
+                    <label for={{ norm }}>{{ norm }}</label>
                 {% endfor %}
+                </div>
             </div>
         {% endif %}
     </div>

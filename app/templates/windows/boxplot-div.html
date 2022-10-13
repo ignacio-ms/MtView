@@ -1,0 +1,6 @@
+<div class="chart" id="boxplot-div">
+    <script>
+        var graphs = {{ boxplot | safe }}
+        Plotly.plot('boxplot-div', graphs, {});
+    </script>
+</div>

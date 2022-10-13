@@ -22,6 +22,12 @@ hr {
 
 dl {
     width: 95%;
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+dt {
+    font-weight: bold;
 }
 
 .banner {
@@ -135,6 +141,42 @@ dl {
 	.window-rb [type=radio]:checked + label {
 		border-bottom: none;
 	}
+}
+
+.mode-rb {
+    display: table;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.mode-rb label {
+    width: auto;
+	padding: 1rem 2rem;
+	cursor: pointer;
+	background-color: #F3F3F2;
+	color: #000;
+	font-size: 1.2rem;
+	font-weight: 700;
+	transition: background-color ease 0.3s;
+}
+
+.mode-rb [type=radio] {
+    display: none;
+}
+
+.mode-rb [type=radio]:checked + label {
+    background-color: #fff;
+	color: #ffa400;
+	border-left: 4px solid #ffa400;
+}
+
+option:checked {
+    background-color: #fff;
+    color: #ffa400;
+}
+
+select[multiple]:focus option:checked{
+    background: #ffa400 linear-gradient(0deg, #ffa400 0%, #ffa400 100%);
 }
 
 H5 {

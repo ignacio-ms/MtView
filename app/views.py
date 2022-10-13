@@ -1,7 +1,12 @@
 from flask import render_template, request
+
 from app import app, values
 from app.models import taxonomy
+
 from .forms import GeneForm
+from app.controller import validate_gene_form, init_boxplot
+
+import json
 
 
 @app.route('/')
@@ -9,18 +14,13 @@ from .forms import GeneForm
 def index():
     cols = False
     gene_found = ''
+    boxplot = None
 
-    form = GeneForm()
+    gene_form = GeneForm()
     if request.method == 'POST':
-        if form.validate():
-            fs_taxonomy = taxonomy.get_gene_taxonomy(request.form['gene_name'])
-            fs_expression = taxonomy.get_gene_expression(request.form['gene_name'])
-            if not fs_taxonomy and not fs_expression:
-                gene_found = 'Gene not found'
-                cols = False
-            else:
-                gene_found = 'Gene found'
-                cols = True
+        if gene_form.validate():
+            gene_found, cols = validate_gene_form(request)
+            boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
 
     return render_template(
         'control_card.html',
@@ -32,5 +32,15 @@ def index():
         experiemnt_div=cols,
         gene_found=gene_found,
         taxonomy=taxonomy,
-        form=form
+        boxplot=boxplot,
+        gene_form=gene_form
     )
+
+
+@app.route('/boxplot', methods=['GET', 'POST'])
+def update_boxplot():
+    if request.method == 'POST':
+        data = request.json
+        experiment = data['exp_selected']
+        mode = data['norm_selected']
+        return init_boxplot(experiment, mode)
