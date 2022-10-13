@@ -12,14 +12,14 @@ import json
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    cols = False
+    right_col = False
     gene_found = ''
     boxplot = None
 
     gene_form = GeneForm()
     if request.method == 'POST':
         if gene_form.validate():
-            gene_found, cols = validate_gene_form(request)
+            gene_found, right_col = validate_gene_form(request)
             boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
 
     return render_template(
@@ -28,8 +28,7 @@ def index():
         analysis_tools=values.analysis_tools,
         experiments=values.experiments,
         norm_methods=values.norm_methods,
-        right_col=cols,
-        experiemnt_div=cols,
+        right_col=right_col,
         gene_found=gene_found,
         taxonomy=taxonomy,
         boxplot=boxplot,

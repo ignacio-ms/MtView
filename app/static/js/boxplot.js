@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $('#experiment-div').change(function () {
 
