@@ -1,1 +1,1 @@
-web: python /tmp/run.py
+web: python run.py
