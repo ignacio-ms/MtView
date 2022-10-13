@@ -6,8 +6,6 @@ from app.models import taxonomy
 from .forms import GeneForm
 from app.controller import validate_gene_form, init_boxplot
 
-import json
-
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
