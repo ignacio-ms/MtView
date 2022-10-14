@@ -1,13 +1,14 @@
 import json
-
 import plotly.utils
 
 from app.models import taxonomy
+from app.models import efp
 from app import values
 
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
+
 import re
 
 
@@ -50,27 +51,25 @@ def init_boxplot(experiment, mode):
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return fig_json
 
-# def init_efp(gf, experiment, mode, _):
-#     """
-#     Funtion to plot the eFP (electronic fluorescent pictograph)
-#     """
-#
-#     if taxonomy.expression.empty or gf != 'Gene found':
-#         return None
-#
-#     fig = go.Figure()
-#
-#     efp.generate_efp(experiment, mode)
-#
-#     fig.add_trace(go.Image(colormodel='rgba', z=efp.get_contours(), hoverinfo='none'))
-#     fig.update_xaxes(showticklabels=False)
-#     fig.update_yaxes(showticklabels=False)
-#     fig.update_layout(
-#         height=800,
-#         dragmode=False,
-#         xaxis_range=[200, 1920],
-#         paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-#         xaxis=dict(showgrid=False),
-#         yaxis=dict(showgrid=False)
-#     )
-#     return dcc.Graph(figure=fig)
+
+def init_efp():
+    """
+    Funtion to plot the eFP (electronic fluorescent pictograph)
+    """
+    fig = go.Figure(
+        # data=go.Image(efp.svg)
+    )
+
+    fig.update_xaxes(showticklabels=False)
+    fig.update_yaxes(showticklabels=False)
+    fig.update_layout(
+        height=800,
+        dragmode=False,
+        xaxis_range=[200, 1920],
+        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(showgrid=False),
+        yaxis=dict(showgrid=False)
+    )
+
+    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return fig_json
