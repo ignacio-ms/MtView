@@ -2,5 +2,8 @@
   "name": "MtView",
   "version": "1.0.0",
   "dependencies": {
+  },
+  "scripts": {
+    "start": "python run.py"
   }
 }
