@@ -4,3 +4,4 @@ pandas~=1.4.4
 wtforms~=3.0.1
 flask~=2.2.2
 plotly~=5.10.0
+opencv-python~=4.6.0.66
