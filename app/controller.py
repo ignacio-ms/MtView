@@ -49,26 +49,3 @@ def init_boxplot(experiment, mode):
 
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return fig_json
-
-
-def init_efp():
-    """
-    Funtion to plot the eFP (electronic fluorescent pictograph)
-    """
-    fig = go.Figure(
-        # data=go.Image(efp.svg)
-    )
-
-    fig.update_xaxes(showticklabels=False)
-    fig.update_yaxes(showticklabels=False)
-    fig.update_layout(
-        height=800,
-        dragmode=False,
-        xaxis_range=[200, 1920],
-        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(showgrid=False),
-        yaxis=dict(showgrid=False)
-    )
-
-    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return fig_json

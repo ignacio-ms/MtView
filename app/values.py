@@ -10,8 +10,8 @@ analysis_tools = {
 }
 
 img_labels = [
-    'flower', 'pod', 'vegetive_bud',
-    'leafs', 'petiole', 'steam',
+    'flower', 'pod', 'vegetative_bud',
+    'leaf_with_petiolules', 'petiole', 'stem',
     'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d',
     'non_inoculated_root', 'root',
     'seed_10d', 'seed_12d', 'seed_16d', 'seed_20d', 'seed_24d', 'seed_36d'

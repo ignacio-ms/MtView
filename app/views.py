@@ -1,7 +1,7 @@
 from flask import render_template, request
 
 from app import app, values
-from app.models import taxonomy
+from app.models import taxonomy, efp
 
 from .forms import GeneForm
 from app.controller import validate_gene_form, init_boxplot
@@ -13,6 +13,7 @@ def index():
     right_col = False
     gene_found = ''
     boxplot = None
+    svg_colors = efp.init_colors()
 
     gene_form = GeneForm()
     if request.method == 'POST':
@@ -30,7 +31,8 @@ def index():
         gene_found=gene_found,
         taxonomy=taxonomy,
         boxplot=boxplot,
-        gene_form=gene_form
+        gene_form=gene_form,
+        svg_colors=svg_colors
     )
 
 
