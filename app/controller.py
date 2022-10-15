@@ -2,7 +2,6 @@ import json
 import plotly.utils
 
 from app.models import taxonomy
-from app.models import efp
 from app import values
 
 import plotly.graph_objects as go
@@ -26,7 +25,9 @@ def init_boxplot(experiment, mode):
 
     titles = {}
     for c, exp in enumerate(experiment):
+        print(exp)
         expression = taxonomy.filter_by_experiment(exp)
+        print(expression)
         categories = taxonomy.get_experiments_info(exp, 'categories')
         date = taxonomy.get_experiments_info(exp, 'date')
 

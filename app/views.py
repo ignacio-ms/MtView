@@ -1,10 +1,10 @@
 from flask import render_template, request
 
 from app import app, values
-from app.models import taxonomy, efp
+from app.models import taxonomy
 
 from .forms import GeneForm
-from app.controller import validate_gene_form, init_boxplot, init_efp
+from app.controller import validate_gene_form, init_boxplot
 
 
 @app.route('/')
@@ -13,14 +13,12 @@ def index():
     right_col = False
     gene_found = ''
     boxplot = None
-    # svg = None
 
     gene_form = GeneForm()
     if request.method == 'POST':
         if gene_form.validate():
             gene_found, right_col = validate_gene_form(request)
             boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
-            # svg = init_efp()
 
     return render_template(
         'control_card.html',
@@ -32,8 +30,7 @@ def index():
         gene_found=gene_found,
         taxonomy=taxonomy,
         boxplot=boxplot,
-        gene_form=gene_form,
-        svg=efp.paths
+        gene_form=gene_form
     )
 
 
