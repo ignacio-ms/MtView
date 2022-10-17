@@ -92,11 +92,6 @@ dt {
 	background-color: #fff;
 }
 
-.tab-content * {
-    -webkit-animation: scale 0.2s ease-in-out;
-    -moz-animation: scale 0.2s ease-in-out;
-    animation: scale 0.2s ease-in-out;
-}
 @keyframes scale {
   0% {
     transform: scale(0.9);
