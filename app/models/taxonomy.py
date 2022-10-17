@@ -12,8 +12,6 @@ from app import utils
 class Taxonomy:
     def __init__(self):
 
-        self.gene_name = ''
-
         self.taxonomy = pd.DataFrame()
         self.expression = pd.DataFrame()
 

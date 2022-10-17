@@ -17,7 +17,6 @@ def validate_gene_form(request):
     if not fs_taxonomy or not fs_expression:
         return 'Gene not found', False
 
-    taxonomy.gene_name = request.form['gene_name']
     return 'Gene found', True
 
 
@@ -26,8 +25,6 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
     titles = {}
     for c, exp in enumerate(experiment):
-        print(taxonomy.gene_name)
-        print(taxonomy.get_expression())
         expression = taxonomy.filter_by_experiment(exp)
         categories = taxonomy.get_experiments_info(exp, 'categories')
         date = taxonomy.get_experiments_info(exp, 'date')
