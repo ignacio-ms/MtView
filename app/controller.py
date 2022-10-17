@@ -25,8 +25,7 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
     titles = {}
     for c, exp in enumerate(experiment):
-        print(taxonomy.get_taxonomy())
-        print(taxonomy.get_expression())
+
         expression = taxonomy.filter_by_experiment(exp)
         categories = taxonomy.get_experiments_info(exp, 'categories')
         date = taxonomy.get_experiments_info(exp, 'date')
