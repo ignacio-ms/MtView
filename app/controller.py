@@ -17,6 +17,7 @@ def validate_gene_form(request):
     if not fs_taxonomy or not fs_expression:
         return 'Gene not found', False
 
+    taxonomy.gene_name = request.form['gene_name']
     return 'Gene found', True
 
 
