@@ -1,7 +1,7 @@
 import json
 import plotly.utils
 
-from app.models import taxonomy
+from app.views import taxonomy
 from app import values
 
 import plotly.graph_objects as go
@@ -12,8 +12,8 @@ import re
 
 
 def validate_gene_form(request):
-    fs_expression = taxonomy.get_gene_expression(request.form['gene_name'])
-    fs_taxonomy = taxonomy.get_gene_taxonomy(request.form['gene_name'])
+    fs_expression = taxonomy.set_gene_expression(request.form['gene_name'])
+    fs_taxonomy = taxonomy.set_gene_taxonomy(request.form['gene_name'])
     if not fs_taxonomy or not fs_expression:
         return 'Gene not found', False
 

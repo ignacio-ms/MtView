@@ -16,7 +16,7 @@ class Taxonomy:
         self.expression = pd.DataFrame()
 
     @utils.timed
-    def get_gene_taxonomy(self, gene_name, verbose=False):
+    def set_gene_taxonomy(self, gene_name, verbose=False):
         """
         Function to get the taxonomy of a single gen from UniProt.
         Data will be estored in self Pandas DataFrame variable taxonomy.
@@ -44,7 +44,7 @@ class Taxonomy:
             return False
 
     @utils.timed
-    def get_gene_expression(self, gene_name, verbose=False):
+    def set_gene_expression(self, gene_name, verbose=False):
         """
         Function to get expression of a single gen from ExpressionAtlas.
         Data will be estored in self Pandas DataFrame variable expression.
@@ -109,3 +109,9 @@ class Taxonomy:
         proyects = species_release['projects']
         proyect = [proyect for proyect in proyects if proyect['id'] == proyect_id][0]
         return proyect[field]
+
+    def get_taxonomy(self):
+        return self.taxonomy
+
+    def get_expression(self):
+        return self.expression
