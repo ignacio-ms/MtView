@@ -5,6 +5,18 @@
             <label for="gene-in">Enter gene name</label>
                 {{ gene_form.gene_name() }}
             <br>
+            <script>
+                $(function() {
+                    $.ajax({
+                        url: '/search'
+                    }).done(function (data) {
+                        $('#gene-in').autocomplete({
+                            source: data,
+                            minLength: 2
+                        });
+                    });
+                });
+            </script>
             <input id="submit-gene-btt" type="submit" value="Search" style="width: 100%">
         </form>
         <div id="gene-found">{{ gene_found }}</div>

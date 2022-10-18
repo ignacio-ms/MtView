@@ -1,4 +1,7 @@
-from flask import render_template, request
+import json
+
+import numpy as np
+from flask import render_template, request, Response
 
 from app import app, values
 from app.models import taxonomy, efp
@@ -7,7 +10,7 @@ from .forms import GeneForm
 from app.controller import validate_gene_form, init_boxplot
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     right_col = False
@@ -17,9 +20,8 @@ def index():
 
     gene_form = GeneForm()
     if request.method == 'POST':
-        if gene_form.validate():
-            gene_found, right_col = validate_gene_form(request)
-            boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
+        gene_found, right_col = validate_gene_form(request)
+        boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
 
     return render_template(
         'control_card.html',
@@ -34,6 +36,12 @@ def index():
         gene_form=gene_form,
         svg_colors=svg_colors
     )
+
+
+@app.route('/search', methods=['GET'])
+def live_search():
+    choices = list(taxonomy.get_gene_names()['locus_tag'])
+    return Response(json.dumps(choices), mimetype='application/json')
 
 
 @app.route('/boxplot', methods=['GET', 'POST'])

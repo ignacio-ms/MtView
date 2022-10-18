@@ -1,6 +1,8 @@
 from __future__ import print_function
 
+
 import requests
+import os
 
 import pandas as pd
 import numpy as np
@@ -12,8 +14,13 @@ from app import utils
 class Taxonomy:
     def __init__(self):
 
+        self.gene_names = pd.DataFrame()
+
         self.taxonomy = pd.DataFrame()
         self.expression = pd.DataFrame()
+
+    def set_gene_names(self):
+        self.gene_names = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/gene_names.tsv'), sep='\t')
 
     @utils.timed
     def set_gene_taxonomy(self, gene_name, verbose=False):
@@ -109,6 +116,9 @@ class Taxonomy:
         proyects = species_release['projects']
         proyect = [proyect for proyect in proyects if proyect['id'] == proyect_id][0]
         return proyect[field]
+
+    def get_gene_names(self):
+        return self.gene_names
 
     def get_taxonomy(self):
         return self.taxonomy
