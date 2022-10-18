@@ -13,14 +13,15 @@ from app.controller import validate_gene_form, init_boxplot
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    right_col = False
+    is_expression = False
+    is_taxonomy = False
     gene_found = ''
     boxplot = None
     svg_colors = efp.init_colors()
 
     gene_form = GeneForm()
     if request.method == 'POST':
-        gene_found, right_col = validate_gene_form(request)
+        gene_found, is_expression, is_taxonomy = validate_gene_form(request)
         boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
 
     return render_template(
@@ -29,7 +30,8 @@ def index():
         analysis_tools=values.analysis_tools,
         experiments=values.experiments,
         norm_methods=values.norm_methods,
-        right_col=right_col,
+        right_col=is_expression,
+        is_taxonomy=is_taxonomy,
         gene_found=gene_found,
         taxonomy=taxonomy,
         boxplot=boxplot,

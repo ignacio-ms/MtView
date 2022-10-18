@@ -13,11 +13,14 @@ import re
 
 def validate_gene_form(request):
     fs_expression = taxonomy.set_gene_expression(request.form['gene_name'])
-    fs_taxonomy = taxonomy.set_gene_taxonomy(request.form['gene_name'])
-    if not fs_taxonomy or not fs_expression:
-        return 'Gene not found', False
+    if not fs_expression:
+        return 'Gene not found', False, False
 
-    return 'Gene found', True
+    fs_taxonomy = taxonomy.set_gene_taxonomy(request.form['gene_name'])
+    if not fs_taxonomy:
+        return 'Gene found', True, False
+
+    return 'Gene found', True, True
 
 
 def init_boxplot(experiment, mode, height=800, width=1200):
