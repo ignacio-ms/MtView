@@ -20,12 +20,16 @@ class Taxonomy:
         self.expression = pd.DataFrame()
 
     def set_gene_names(self):
+        """
+        Reads all avaivable gene locus tags (Gene Names)
+        """
+
         self.gene_names = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/gene_names.tsv'), sep='\t')
 
     @utils.timed
     def set_gene_taxonomy(self, gene_name, verbose=False):
         """
-        Function to get the taxonomy of a single gen from UniProt.
+        Gets the taxonomy of a single gen from UniProt.
         Data will be estored in self Pandas DataFrame variable taxonomy.
         """
 
@@ -53,7 +57,7 @@ class Taxonomy:
     @utils.timed
     def set_gene_expression(self, gene_name, verbose=False):
         """
-        Function to get expression of a single gen from ExpressionAtlas.
+        Gets expression of a single gen from ExpressionAtlas.
         Data will be estored in self Pandas DataFrame variable expression.
         """
 
@@ -79,7 +83,7 @@ class Taxonomy:
 
     def filter_by_experiment(self, experiment, verbose=False):
         """
-        Function to filter gene expression by a single experiment
+        Filters gene expression by a single experiment
         """
 
         if self.expression.empty:  # Chech for empty expression data
@@ -106,7 +110,7 @@ class Taxonomy:
     @staticmethod
     def get_experiments_info(proyect_id, field):
         """
-        Function to get the categories of a given experiment.
+        Gets the categories of a given experiment.
         """
 
         url = 'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset'

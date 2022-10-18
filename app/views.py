@@ -1,6 +1,5 @@
 import json
 
-import numpy as np
 from flask import render_template, request, Response
 
 from app import app, values

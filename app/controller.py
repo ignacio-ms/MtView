@@ -12,6 +12,9 @@ import re
 
 
 def validate_gene_form(request):
+    """
+
+    """
     fs_expression = taxonomy.set_gene_expression(request.form['gene_name'])
     if not fs_expression:
         return 'Gene not found', False, False
