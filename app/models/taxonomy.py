@@ -129,3 +129,7 @@ class Taxonomy:
 
     def get_expression(self):
         return self.expression
+
+    def get_accession_id(self):
+        if not self.taxonomy.empty:
+            return self.taxonomy.at[0, 'Entry']

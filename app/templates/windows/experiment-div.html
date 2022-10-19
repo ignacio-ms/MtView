@@ -1,0 +1,26 @@
+<div id="experiment-div" style="visibility: hidden">
+    <label for="experiments-dd">Select experiments</label>
+    <select id="experiments-dd" style="width: 100%; height: 205px" multiple>
+        {% for experiment in experiments %}
+            {% if experiment == 'SRP362799' %}
+                <option value={{ experiment }} selected>{{ experiment }}</option>
+            {% else %}
+                <option value={{ experiment }}>{{ experiment }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <br>
+
+    <br>
+    <p>Select normalization method</p>
+    <div class="mode-rb">
+        {% for norm in norm_methods %}
+        {% if norm == 'log2_tmm' %}
+            <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked>
+        {% else %}
+            <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
+        {% endif %}
+        <label for={{ norm }}>{{ norm }}</label>
+    {% endfor %}
+    </div>
+</div>

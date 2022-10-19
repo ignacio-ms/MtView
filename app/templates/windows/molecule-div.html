@@ -1,0 +1,13 @@
+<script src="https://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+<div id="af-container" class="mol-container">
+    {% if mol is none %}
+        <br>
+        <br>
+        <h5 style="align-items: center">Not molecule prediction found for this gene</h5>
+    {% endif %}
+</div>
+<script type="text/javascript">
+    {% if mol is not none %}
+        display_molecule({{ mol|tojson }})
+    {% endif %}
+</script>

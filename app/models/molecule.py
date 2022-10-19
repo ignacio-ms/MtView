@@ -1,9 +1,36 @@
 import requests
-import py3Dmol
 
 
-accession_id = 'A0A396IUP1'
-pymol_url = f'https://3dmol.csb.pitt.edu/viewer.html?url=https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
-pymol_url_comp = f'https://3dmol.csb.pitt.edu/viewer.html?url=https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb&select=all&style=cartoon:style~rectangle,color~spectrum,arrows~true;line:hidden~true,linewidth~5,colorscheme~Jmol;stick:hidden~true'
-url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
-res = requests.get(url)
+class Molecule:
+    def __init__(self):
+
+        self.mol = None
+        self.pae = None
+
+    def set_mol(self, accession_id):
+        """
+        Gets the pdb data of the 3d molecule predicted from AplphafoldV2 via API.
+        """
+        url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
+        res = requests.get(url)
+        if res.status_code != 200:
+            print('Molecule not found')
+            return
+
+        print(f'Molecule found with accession id: {accession_id}')
+        self.mol = res.text
+
+    def set_pae(self, accession_id):
+        """
+        Gets the Predicted Aligned Error data of the 3d molecule predicted from AplphafoldV2 via API.
+        """
+
+        url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-predicted_aligned_error_v3.json'
+        res = requests.get(url)
+        if res.status_code != 200:
+            return
+
+        self.pae = res.text
+
+    def get_mol(self):
+        return self.mol
