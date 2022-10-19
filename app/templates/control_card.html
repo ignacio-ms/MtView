@@ -18,7 +18,9 @@
             </script>
             <input id="submit-gene-btt" type="submit" value="Search" style="display: table; width: 100%" onclick="$('#loading').show();">
         </form>
-        <div id="gene-found">{{ gene_found }}</div>
+        {% if gene_name != '' %}
+            <div id="gene-found">{{ gene_found + ': ' + gene_name }}</div>
+        {% endif %}
         <div id="loading" style="display: none">
             <img id="img_loading" src="{{ url_for('static', filename='data/dna_loading.gif')}}" alt="" style="height: 40%; width: 50%">
             <label for="img_loading" style="margin: 0 auto; display: table">Loading gene...</label>

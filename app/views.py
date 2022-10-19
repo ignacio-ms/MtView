@@ -15,6 +15,7 @@ def index():
     is_expression = False
     is_taxonomy = False
     gene_found = ''
+    gene_name = ''
     boxplot = None
     mol = None
     svg_colors = efp.init_colors()
@@ -23,6 +24,7 @@ def index():
     if request.method == 'POST':
         gene_found, is_expression, is_taxonomy = validate_gene_form(request)
         boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
+        gene_name = request.form['gene_name']
         if is_taxonomy:
             molecule.set_mol(taxonomy.get_accession_id())
             molecule.set_pae(taxonomy.get_accession_id())
@@ -37,6 +39,7 @@ def index():
         right_col=is_expression,
         is_taxonomy=is_taxonomy,
         gene_found=gene_found,
+        gene_name=gene_name,
         taxonomy=taxonomy,
         boxplot=boxplot,
         gene_form=gene_form,
