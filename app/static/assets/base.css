@@ -245,7 +245,7 @@ textarea:focus,
 /*  outline: 0; }*/
 label,
 legend {
-  display: block;
+  /*display: block;*/
   margin-bottom: 0; }
 fieldset {
   padding: 0;

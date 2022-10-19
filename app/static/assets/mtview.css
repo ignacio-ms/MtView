@@ -152,6 +152,26 @@ dt {
     position: relative;
 }
 
+#gene-in {
+    width: 100%;
+    display: table;
+}
+
+#gene-found {
+    display: table;
+}
+
+#loading {
+    width: 60%;
+    display: table;
+    margin: 0 auto;
+}
+
+#img_loading {
+    display: table;
+    margin: 0 auto;
+}
+
 .mode-rb {
     display: table;
     width: 100%;
