@@ -5,8 +5,7 @@ colors = ['slategray', '#ffa400', 'crimson']
 
 analysis_tools = {
     'Taxonomy': 'taxonomy', 'Expression values': 'boxplot',
-    'eFP': 'eFP', 'Cell eFP': 'cell-eFP', 'Molecule viewer': 'molecule',
-    'Heatmap': 'heatmap', 'Chromosome': 'chr', 'Interactions': 'interactions'
+    'eFP': 'eFP', 'Molecule viewer': 'molecule'
 }
 
 img_labels = [

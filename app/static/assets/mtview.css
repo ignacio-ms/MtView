@@ -134,7 +134,7 @@ dt {
 
 	.window-rb label {
 		order: 1;
-		width: auto;
+		width: 20%;
 	}
 
 	.window-rb .tab-content {
