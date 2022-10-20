@@ -147,7 +147,7 @@ dt {
 }
 
 .mol-container {
-    width: 70%;
+    width: 65%;
     height: 90vh;
     float: left;
     position: relative;
@@ -159,6 +159,10 @@ dt {
     bottom: 10%;
     -ms-transform: translateY(10%);
     transform: translateY(10%);
+}
+
+.modebar {
+    display: none !important;
 }
 
 #gene-in {
