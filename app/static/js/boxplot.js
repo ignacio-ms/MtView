@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $('#experiment-div').change(function () {
 
+        $('#loading-plot').show();
+
         let selected_btt;
         const radio_bttns = document.querySelectorAll('input[name="mode-rb"]');
         for (const btt of radio_bttns){
@@ -28,6 +30,7 @@ $(document).ready(function () {
             }),
             success: function (data) {
                 Plotly.newPlot('boxplot-div', data);
+                $('#loading-plot').hide();
             }
         });
     })

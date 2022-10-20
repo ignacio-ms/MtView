@@ -23,4 +23,8 @@
         <label for={{ norm }}>{{ norm }}</label>
     {% endfor %}
     </div>
+    <div id="loading-plot" style="display: none">
+        <img id="img_loading" src="{{ url_for('static', filename='gif/dna_loading.gif')}}" alt="" style="height: 40%; width: 50%">
+        <label for="img_loading" style="margin: 0 auto; display: table">Loading data...</label>
+    </div>
 </div>
