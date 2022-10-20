@@ -156,9 +156,9 @@ dt {
 .pae-container {
     width: 25%;
     float: left;
-    top: 50%;
-    -ms-transform: translateY(50%);
-    transform: translateY(50%);
+    bottom: 10%;
+    -ms-transform: translateY(10%);
+    transform: translateY(10%);
 }
 
 #gene-in {

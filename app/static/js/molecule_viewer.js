@@ -18,5 +18,5 @@ function display_molecule(pdb) {
     );
     viewer.zoomTo();
     viewer.render();
-    viewer.zoom(1.2, 1000);
+    viewer.zoom(1, 1000);
 }
