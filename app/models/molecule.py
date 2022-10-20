@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 
@@ -30,7 +32,10 @@ class Molecule:
         if res.status_code != 200:
             return
 
-        self.pae = res.text
+        self.pae = json.loads(res.text)[0]
 
     def get_mol(self):
         return self.mol
+
+    def get_pae(self):
+        return self.pae['predicted_aligned_error']

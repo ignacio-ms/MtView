@@ -147,9 +147,18 @@ dt {
 }
 
 .mol-container {
-    width: 100%;
-    height: 100vh;
+    width: 70%;
+    height: 90vh;
+    float: left;
     position: relative;
+}
+
+.pae-container {
+    width: 25%;
+    float: left;
+    top: 50%;
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
 }
 
 #gene-in {
@@ -207,6 +216,11 @@ option:checked {
 #boxplot-div {
     width: 100%;
     height: 100%;
+}
+
+#pae-div {
+    width: 100%;
+    height: 300px;
 }
 
 select[multiple]:focus option:checked{

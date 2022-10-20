@@ -1,10 +1,11 @@
 import json
 import plotly.utils
 
-from app.views import taxonomy
+from app.views import taxonomy, molecule
 from app import values
 
 import plotly.graph_objects as go
+import plotly.express as px
 import pandas as pd
 import numpy as np
 
@@ -49,6 +50,14 @@ def init_boxplot(experiment, mode, height=800, width=1200):
             fig.add_trace(go.Box(y=d[cols], name=ticks[i], marker_color=values.colors[c % 3]))
 
     fig.update_layout(height=height, width=width, title=mode + str(titles))
+
+    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return fig_json
+
+
+def init_pae(size=400):
+    fig = px.imshow(molecule.get_pae())
+    fig.update_layout(height=size, width=size, title='Predicted aligned error')
 
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return fig_json

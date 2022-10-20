@@ -6,7 +6,7 @@ from app import app, values
 from app.models import taxonomy, efp, molecule
 
 from .forms import GeneForm
-from app.controller import validate_gene_form, init_boxplot
+from app.controller import validate_gene_form, init_boxplot, init_pae
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -18,6 +18,7 @@ def index():
     gene_name = ''
     boxplot = None
     mol = None
+    pae = None
     svg_colors = efp.init_colors()
 
     gene_form = GeneForm()
@@ -29,6 +30,7 @@ def index():
             molecule.set_mol(taxonomy.get_accession_id())
             molecule.set_pae(taxonomy.get_accession_id())
             mol = molecule.get_mol()
+            pae = init_pae()
 
     return render_template(
         'control_card.html',
@@ -43,6 +45,7 @@ def index():
         taxonomy=taxonomy,
         boxplot=boxplot,
         gene_form=gene_form,
+        pae=pae,
         mol=mol,
         svg_colors=svg_colors
     )

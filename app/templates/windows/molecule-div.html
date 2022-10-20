@@ -5,6 +5,14 @@
         <h5 style="align-items: center">Not molecule prediction found for this gene</h5>
     {% endif %}
 </div>
+<div id="pae-cont" class="pae-container">
+    <div class="chart" id="pae-div" style="visibility: hidden">
+        <script>
+            let pae_gr = {{ pae | safe }}
+            Plotly.plot('pae-div', pae_gr, {});
+        </script>
+    </div>
+</div>
 <script type="text/javascript">
     {% if mol is not none %}
         display_molecule({{ mol|tojson }})
