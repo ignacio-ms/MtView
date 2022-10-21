@@ -56,7 +56,7 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
 
 def init_pae(size=400):
-    fig = px.imshow(molecule.get_pae(), color_continuous_scale='rdylbu_r')
+    fig = px.imshow(molecule.get_pae(), color_continuous_scale=values.color_scale)
     fig.update_layout(
         height=size, width=size,
         title='Predicted aligned error',
