@@ -1,8 +1,9 @@
 function display_molecule(pdb) {
     let elem = $('#af-container');
-    let config = { backgroundColor: 'white' };
+    let config = { backgroundColor: 'white', lowerZoomLimit:50, upperZoomLimit: 500 };
     let viewer = $3Dmol.createViewer(elem, config);
     let rendering = false;
+    let skip = false;
 
     const pae_colorscheme = function (atom) {
         if (atom.b >= 90)
@@ -14,7 +15,7 @@ function display_molecule(pdb) {
         return '#FF7D45';
     }
 
-    viewer.addModel(pdb, "pdb");
+    const glob_model = viewer.addModel(pdb, "pdb", {keepH: true, assignBonds: true});
     viewer.setStyle({},
         {
             'cartoon': {
@@ -25,19 +26,48 @@ function display_molecule(pdb) {
     );
     viewer.zoomTo();
     viewer.setClickable({}, true, function (atom, _viewer, _event, _container) {
-        if (rendering)
-            viewer.removeModel(viewer.getModel());
-        rendering = true;
+        if (rendering){
+            viewer.setStyle({}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true}});
 
-        const new_atoms = viewer.selectedAtoms({resi: atom.resi, expand: 10});
-        const model = viewer.addModel();
-        model.addAtoms(new_atoms);
-        model.setStyle({}, {stick: {radius: .15}});
+            const prev_model = viewer.getModel(1);
+            if (prev_model.selectedAtoms({resi: atom.resi}).length !== 0){
+                viewer.zoomTo({}, 500);
+                viewer.zoom(1, 1000);
 
-        viewer.enableFog(true);
-        viewer.zoomTo({resi: atom.resi, expand: 10}, 700);
-        viewer.render();
+                rendering = false;
+                skip = true;
+                viewer.render();
+            }
+            viewer.removeModel(1);
+        }
+        if (!skip){
+            rendering = true;
+
+            const new_atoms = viewer.selectedAtoms({resi: atom.resi, expand: 10});
+            const model = viewer.addModel();
+            model.addAtoms(new_atoms);
+            model.setStyle({}, {stick: {radius: .15}, sphere: {radius: .2}});
+
+            viewer.enableFog(true);
+            glob_model.setStyle({resi: atom.resi, expand: 10}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true, opacity: .85}});
+            viewer.zoomTo({resi: atom.resi, expand: 10}, 700);
+            viewer.render();
+        }
+        skip = false;
     });
+    viewer.setHoverable({}, true,
+        function(atom,viewer) {
+           if(!atom.label) {
+                atom.label = viewer.addLabel(atom.resn + ": " + atom.atom + '\n' + atom.b + '% confident', {position: atom, backgroundColor: 'mintcream', fontColor:'black'});
+           }
+       },
+       function(atom) {
+           if(atom.label) {
+                viewer.removeLabel(atom.label);
+                delete atom.label;
+           }
+        }
+    );
     viewer.render();
     viewer.zoom(1, 1000);
 }

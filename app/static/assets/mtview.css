@@ -185,6 +185,11 @@ dt {
     margin: 0 auto;
 }
 
+#pae-legend-div {
+    display: table;
+    margin: 0 auto;
+}
+
 .mode-rb {
     display: table;
     width: 100%;

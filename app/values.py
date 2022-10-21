@@ -16,4 +16,4 @@ img_labels = [
     'seed_10d', 'seed_12d', 'seed_16d', 'seed_20d', 'seed_24d', 'seed_36d'
 ]
 
-color_scale = ['rgb(0, 83, 214)', 'rgb(101, 203, 243)', 'rgb(255, 219, 19)', 'rgb(255, 125, 69)']
+color_scale = ['#0053D6', '#65CBF3', '#FFDB13', '#FF7D45']
