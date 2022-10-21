@@ -43,14 +43,14 @@ function display_molecule(pdb) {
         if (!skip){
             rendering = true;
 
-            const new_atoms = viewer.selectedAtoms({resi: atom.resi, expand: 10});
+            const new_atoms = viewer.selectedAtoms({resi: atom.resi, expand: 7});
             const model = viewer.addModel();
             model.addAtoms(new_atoms);
             model.setStyle({}, {stick: {radius: .15}, sphere: {radius: .2}});
 
             viewer.enableFog(true);
-            glob_model.setStyle({resi: atom.resi, expand: 10}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true, opacity: .85}});
-            viewer.zoomTo({resi: atom.resi, expand: 10}, 700);
+            glob_model.setStyle({resi: atom.resi, expand: 7}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true, opacity: .85}});
+            viewer.zoomTo({resi: atom.resi, expand: 7}, 700);
             viewer.render();
         }
         skip = false;

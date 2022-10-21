@@ -1,21 +1,21 @@
 <div id="pae-legend-div" style="visibility: hidden">
     {% if mol is not none %}
-    Model confidence:
-    <div class="row column legendRow">
-        <span class="legendColor" style="background-color: rgb(0, 83, 214);">&nbsp;</span>
-        <span class="legendlabel">Very high (pLDDT &gt; 90)</span>
-    </div>
-    <div class="row column legendRow">
-        <span class="legendColor" style="background-color: rgb(101, 203, 243);">&nbsp;</span>
-        <span class="legendlabel">Confident (90 &gt; pLDDT &gt; 70)</span>
-    </div>
-    <div class="row column legendRow">
-        <span class="legendColor" style="background-color: rgb(255, 219, 19);">&nbsp;</span>
-        <span class="legendlabel">Low (70 &gt; pLDDT &gt; 50)</span>
-    </div>
-    <div class="row column legendRow">
-        <span class="legendColor" style="background-color: rgb(255, 125, 69);">&nbsp;</span>
-        <span class="legendlabel">Very low (pLDDT &lt; 50)</span>
-    </div>
+        Model confidence:
+        <div class="row column">
+            <span class="legendColor" style="background-color: rgb(0, 83, 214);">&nbsp;</span>
+            <span class="legendlabel">Very high (pLDDT &gt; 90)</span>
+        </div>
+        <div class="row column">
+            <span class="legendColor" style="background-color: rgb(101, 203, 243);">&nbsp;</span>
+            <span class="legendlabel">Confident (90 &gt; pLDDT &gt; 70)</span>
+        </div>
+        <div class="row column">
+            <span class="legendColor" style="background-color: rgb(255, 219, 19);">&nbsp;</span>
+            <span class="legendlabel">Low (70 &gt; pLDDT &gt; 50)</span>
+        </div>
+        <div class="row column">
+            <span class="legendColor" style="background-color: rgb(255, 125, 69);">&nbsp;</span>
+            <span class="legendlabel">Very low (pLDDT &lt; 50)</span>
+        </div>
     {% endif %}
 </div>
