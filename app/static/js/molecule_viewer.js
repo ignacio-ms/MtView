@@ -35,10 +35,9 @@ function display_molecule(pdb) {
         model.setStyle({}, {stick: {radius: .15}});
 
         viewer.enableFog(true);
-        viewer.zoomTo({resi: atom.resi, expand: 10}, 1000);
+        viewer.zoomTo({resi: atom.resi, expand: 10}, 700);
         viewer.render();
     });
-    viewer.enableContextMenu({}, true);
     viewer.render();
     viewer.zoom(1, 1000);
 }
