@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import re
 
 import requests
 import os
@@ -9,6 +10,7 @@ import numpy as np
 import json
 
 from app import utils
+from app import values
 
 
 class Taxonomy:
@@ -42,6 +44,10 @@ class Taxonomy:
         try:  # Check of data availability in Dataset
             cols = line[0].split('\t')
             line = np.array(line[1].split('\t'))
+
+            for i in range(line.size):
+                for del_elem in values.del_list:
+                    line[i] = re.sub(del_elem, '', line[i])
 
             print(f'Gene found with accession id: {line[0]}')
             self.taxonomy = pd.DataFrame(line.reshape((1, -1)), columns=cols)
