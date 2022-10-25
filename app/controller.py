@@ -60,7 +60,8 @@ def init_pae(size=400):
     fig.update_layout(
         height=size, width=size,
         title='Predicted aligned error',
-        dragmode=False
+        dragmode='select',
+        newselection=dict(line=dict(color='#ffa400'))
     )
 
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)

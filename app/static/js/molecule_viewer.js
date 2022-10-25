@@ -33,6 +33,7 @@ function display_molecule(pdb) {
             if (prev_model.selectedAtoms({resi: atom.resi}).length !== 0){
                 viewer.zoomTo({}, 500);
                 viewer.zoom(1, 1000);
+                viewer.enableFog(false);
 
                 rendering = false;
                 skip = true;
@@ -43,14 +44,27 @@ function display_molecule(pdb) {
         if (!skip){
             rendering = true;
 
-            const new_atoms = viewer.selectedAtoms({resi: atom.resi, expand: 7});
+            let new_atoms = [];
+            let new_atoms_resi = [];
+
+            const new_selection = viewer.selectedAtoms({resi: atom.resi, expand: 5});
+            new_selection.forEach(function (atom) {
+                let resi = atom.resi;
+                if (!new_atoms_resi.includes(resi)){
+                    new_atoms_resi.push(resi);
+                    viewer.selectedAtoms({resi: resi}).forEach(function (n_atom) {
+                        new_atoms.push(n_atom);
+                    })
+                }
+            })
+
             const model = viewer.addModel();
             model.addAtoms(new_atoms);
             model.setStyle({}, {stick: {radius: .15}, sphere: {radius: .2}});
 
             viewer.enableFog(true);
-            glob_model.setStyle({resi: atom.resi, expand: 7}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true, opacity: .85}});
-            viewer.zoomTo({resi: atom.resi, expand: 7}, 700);
+            glob_model.setStyle({resi: new_atoms_resi}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true, opacity: .85}});
+            viewer.zoomTo({resi: new_atoms_resi}, 700);
             viewer.render();
         }
         skip = false;
@@ -58,7 +72,7 @@ function display_molecule(pdb) {
     viewer.setHoverable({}, true,
         function(atom,viewer) {
            if(!atom.label) {
-                atom.label = viewer.addLabel(atom.resn + ": " + atom.atom + '\n' + atom.b + '% confident', {position: atom, backgroundColor: 'mintcream', fontColor:'black'});
+                atom.label = viewer.addLabel(atom.atom + ' | ' + atom.resn + ": " + atom.resi + '\n' + atom.b + '% confident', {position: atom, backgroundColor: 'mintcream', fontColor:'black'});
            }
        },
        function(atom) {
