@@ -56,12 +56,18 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
 
 def init_pae(size=400):
-    fig = px.imshow(molecule.get_pae(), color_continuous_scale=values.color_scale)
+    fig = px.imshow(
+        molecule.get_pae(),
+        color_continuous_scale=values.color_scale,
+        labels={'x': 'Scored esidue', 'y': 'Aligned residue', 'color': 'EPE (Angstroms)'}
+    )
+    fig.update_xaxes(title='Scored residue').update_yaxes(title='Aligned residue')
+    fig.update_coloraxes(colorbar_title=None, colorbar_orientation='h')
     fig.update_layout(
         height=size, width=size,
         title='Predicted aligned error',
         dragmode='select',
-        newselection=dict(line=dict(color='#ffa400'))
+        activeselection=dict(fillcolor='yellow')
     )
 
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)

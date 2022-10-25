@@ -33,7 +33,6 @@ function display_molecule(pdb) {
             if (prev_model.selectedAtoms({resi: atom.resi}).length !== 0){
                 viewer.zoomTo({}, 500);
                 viewer.zoom(1, 1000);
-                viewer.enableFog(false);
 
                 rendering = false;
                 skip = true;
