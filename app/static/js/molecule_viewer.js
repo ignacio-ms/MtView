@@ -26,6 +26,7 @@ function display_molecule(pdb) {
     );
     viewer.zoomTo();
     viewer.setClickable({}, true, function (atom, _viewer, _event, _container) {
+        viewer.setStyle({}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true}});
         if (rendering){
             viewer.setStyle({}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true}});
 
@@ -83,4 +84,29 @@ function display_molecule(pdb) {
     );
     viewer.render();
     viewer.zoom(1, 1000);
+
+    const pae_div = $('#pae-div');
+    pae_div.on('plotly_selected', function (event, points) {
+        const init = parseInt(points.range.x[0]);
+        const fin = parseInt(points.range.y[1]);
+
+        console.log(init);
+        console.log(fin);
+
+        let sel_range = [];
+        for (let i = init; i <= fin; i++) sel_range.push(i);
+
+        viewer.zoomTo({}, 500);
+        viewer.zoom(1, 1000);
+        viewer.setStyle({}, {'cartoon': {color: '#ECF3FD', 'arrows': true}});
+        viewer.setStyle({resi: sel_range}, {'cartoon': {color: '#0053D6', 'arrows': true}});
+        viewer.render();
+    })
+
+    pae_div.on('plotly_click', function () {
+        viewer.zoomTo({}, 500);
+        viewer.zoom(1, 1000);
+        viewer.setStyle({}, {'cartoon': {colorfunc: pae_colorscheme, 'arrows': true}});
+        viewer.render();
+    })
 }

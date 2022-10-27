@@ -6,7 +6,6 @@ from app import values
 
 import plotly.graph_objects as go
 import plotly.express as px
-# from ipywidgets import Output, VBox
 
 import pandas as pd
 import numpy as np
@@ -71,33 +70,6 @@ def init_pae(size=400):
         title='Predicted aligned error',
         dragmode='select'
     )
-
-    # fig = go.FigureWidget(data=[
-    #     go.Scatter(y=[None]),
-    #     go.Heatmap(
-    #         z=molecule.get_pae(),
-    #         colorscale=values.color_scale,
-    #         # labels={'x': 'Scored esidue', 'y': 'Aligned residue', 'color': 'EPE (Angstroms)'}
-    #     )
-    # ], layout=go.Layout(dragmode='select'))
-    #
-    # fig.update_xaxes(title='Scored residue').update_yaxes(title='Aligned residue')
-    # fig.update_coloraxes(colorbar_title='Angstroms')
-    # fig.layout.title = 'Predicted aligned error'
-    # fig.layout.height = size
-    # fig.layout.width = size
-    #
-    # out = Output()
-    #
-    # @out.capture(clear_output=True)
-    # def ployly_selected(trace, points, selector):
-    #     print('xrange', selector.xrange)
-    #     print('yrange', selector.yrange)
-    #
-    # sel_trace = fig.data[0]
-    # sel_trace.on_selection(ployly_selected)
-    #
-    # VBox([fig, out])
 
     fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return fig_json

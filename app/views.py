@@ -1,5 +1,6 @@
 import json
 
+import numpy as np
 from flask import render_template, request, Response
 
 from app import app, values
@@ -64,10 +65,3 @@ def update_boxplot():
         experiment = data['exp_selected']
         mode = data['norm_selected']
         return init_boxplot(experiment, mode)
-
-
-@app.route('/pae', methods=['GET', 'POST'])
-def update_molecule():
-    if request.method == 'POST':
-        # Update mol
-        return request.json
