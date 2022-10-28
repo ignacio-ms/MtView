@@ -87,7 +87,7 @@ function display_molecule(pdb) {
 
     const pae_div = $('#pae-div');
     pae_div.on('plotly_selected', function (event, points) {
-        const init = parseInt(points.range.x[0]);
+        const init = parseInt(points.range.y[0]);
         const fin = parseInt(points.range.y[1]);
 
         console.log(init);

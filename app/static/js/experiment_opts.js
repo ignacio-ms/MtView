@@ -1,7 +1,7 @@
 function exp_visibility() {
     const experiment_div = document.getElementById('experiment-div');
     const pae_div = document.getElementById('pae-div');
-    const pae_legend_div = document.getElementById('pae-legend-div');
+    const pae_legend_div = document.getElementById('pae-info-div');
 
     const radio_bttns = document.querySelectorAll('input[name="window-rb"]');
     for (const btt of radio_bttns){

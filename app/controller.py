@@ -68,6 +68,7 @@ def init_pae(size=400):
     fig.update_layout(
         height=size, width=size,
         title='Predicted aligned error',
+        hovermode="closest",
         dragmode='select'
     )
 

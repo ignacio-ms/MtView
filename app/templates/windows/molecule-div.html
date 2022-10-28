@@ -1,17 +1,28 @@
 <div id="af-container" class="mol-container">
     {% if mol is none %}
-        <br>
-        <br>
+        <br><br>
         <h5 style="align-items: center">Not molecule prediction found for this gene</h5>
     {% endif %}
 </div>
 <div id="pae-cont" class="pae-container">
-    <div class="chart" id="pae-div" style="visibility: hidden">
-        <script>
-            let pae_gr = {{ pae | safe }}
-            Plotly.plot('pae-div', pae_gr, {})
-        </script>
-    </div>
+    {% if mol is not none %}
+        <div class="chart" id="pae-div" style="visibility: hidden">
+            <script>
+                let pae_gr = {{ pae | safe }}
+                Plotly.plot('pae-div', pae_gr, {})
+            </script>
+        </div>
+        <div>
+            <br><br><br><br><br>
+            <p>
+                The contour at position (x, y) indicates AlphaFold's expected position
+                at residue x, when the predicted and true structures are aligned on
+                residue y.
+            </p>
+            <p>Usefull for assessing inter-domain accuracy.</p>
+            <p>Drag the graph to select domain, double-clik to unselect it.</p>
+        </div>
+    {% endif %}
 </div>
 <script type="text/javascript">
     {% if mol is not none %}
