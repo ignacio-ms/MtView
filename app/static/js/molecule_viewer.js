@@ -90,9 +90,6 @@ function display_molecule(pdb) {
         const init = parseInt(points.range.y[0]);
         const fin = parseInt(points.range.y[1]);
 
-        console.log(init);
-        console.log(fin);
-
         let sel_range = [];
         for (let i = init; i <= fin; i++) sel_range.push(i);
 

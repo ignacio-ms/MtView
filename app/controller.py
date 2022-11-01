@@ -14,6 +14,10 @@ import re
 
 
 def validate_gene_form(request):
+    """
+    Function to validate the existance of a gene in the differents DDBB via API.
+    """
+
     fs_expression = taxonomy.set_gene_expression(request.form['gene_name'])
     if not fs_expression:
         return 'Gene not found', False, False
@@ -26,6 +30,10 @@ def validate_gene_form(request):
 
 
 def init_boxplot(experiment, mode, height=800, width=1200):
+    """
+    Function to initialize and update the gene expression values boxplot.
+    """
+
     fig = go.Figure()
 
     titles = {}
@@ -34,13 +42,13 @@ def init_boxplot(experiment, mode, height=800, width=1200):
         categories = taxonomy.get_experiments_info(exp, 'categories')
         date = taxonomy.get_experiments_info(exp, 'date')
 
-        d = np.zeros(shape=(3, expression.loc[f'{mode}'].shape[0] // 3))
+        d = np.zeros(shape=(3, expression.loc[mode].shape[0] // 3))
         d_aux = np.zeros(shape=(3,))
 
         titles[exp] = str(date) + '-' + exp + '-' + categories[0]
         ticks = [re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns) if i % 3 == 0]
 
-        for i, data in enumerate(expression.loc[f'{mode}']):
+        for i, data in enumerate(expression.loc[mode]):
             d_aux[i % 3] = data
             if i % 3 == 2:
                 d[:, i // 3] = d_aux
@@ -57,6 +65,10 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
 
 def init_pae(size=400):
+    """
+    Function to initialize the molecule Predicted Aligned Error heatmat.
+    """
+
     fig = px.imshow(
         molecule.get_pae(),
         color_continuous_scale=values.color_scale,
