@@ -31,7 +31,6 @@ class Taxonomy:
 
         self.gene_names = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/gene_names.tsv'), sep='\t')
 
-    @utils.timed
     def set_gene_taxonomy(self, gene_name, verbose=False):
         """
         Gets the taxonomy of a single gen from UniProt.
@@ -60,11 +59,10 @@ class Taxonomy:
                 print(self.taxonomy.head())
 
             return True
-        except IndexError:
+        except [IndexError, ValueError]:
             print('Gene not found')
             return False
 
-    @utils.timed
     def set_gene_expression(self, gene_name, verbose=False):
         """
         Gets expression of a single gen from ExpressionAtlas.

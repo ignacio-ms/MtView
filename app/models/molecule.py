@@ -10,7 +10,6 @@ class Molecule:
         self.mol = None
         self.pae = None
 
-    @utils.timed
     def set_mol(self, accession_id):
         """
         Gets the pdb data of the 3d molecule predicted from AplphafoldV2 via API.
