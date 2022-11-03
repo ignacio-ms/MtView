@@ -21,6 +21,9 @@ class Taxonomy:
         self.taxonomy = pd.DataFrame()
         self.expression = pd.DataFrame()
 
+        self.experiments = []
+        self.dataset_info = []
+
     def set_gene_names(self):
         """
         Reads all avaivable gene locus tags (Gene Names)
@@ -51,6 +54,7 @@ class Taxonomy:
 
             print(f'Gene found with accession id: {line[0]}')
             self.taxonomy = pd.DataFrame(line.reshape((1, -1)), columns=cols)
+            self.taxonomy.at[0, 'Gene Names (ordered locus)'] = self.taxonomy.at[0, 'Gene Names (ordered locus)'].replace('MTR_', 'Medtr')
 
             if verbose:
                 print(self.taxonomy.head())
@@ -96,7 +100,7 @@ class Taxonomy:
             print('No expression data available to filter.')
             return
 
-        filtered = self.expression[[exp for exp in self.expression.columns if exp.startswith(f'{experiment}')]]
+        filtered = self.expression[[exp for exp in self.expression.columns if exp.startswith(experiment)]]
         if filtered.empty:  # Chech for existing experiment
             print('Not existing experiment for current gene.')
             return
@@ -113,19 +117,40 @@ class Taxonomy:
             print(filtered.head())
         return filtered
 
-    @staticmethod
-    def get_experiments_info(proyect_id, field):
+    def set_experiments(self):
         """
-        Gets the categories of a given experiment.
+        Set all available experiments
+        """
+
+        if not self.expression.empty:
+            exp = []
+            for col in self.expression.columns:
+                exp_id, _ = col.split(':')
+                if not [i for i in exp if i.startswith(exp_id)]:
+                    date = str(self.get_experiments_info(exp_id, 'date'))
+                    categories = str(self.get_experiments_info(exp_id, 'categories'))
+                    exp.append(exp_id + '-' + date + '-' + categories)
+            self.experiments = exp
+            return
+        self.experiments = values.experiments
+
+    def get_dataset_info(self):
+        """
+        Gets info of the available experiments in the dataset.
         """
 
         url = 'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset'
         res = requests.get(url)
-        species_release = json.loads(res.text)
+        self.dataset_info = json.loads(res.text)
 
-        proyects = species_release['projects']
-        proyect = [proyect for proyect in proyects if proyect['id'] == proyect_id][0]
-        return proyect[field]
+    def get_experiments_info(self, proyect_id, field):
+        """
+        Gets the categories of a given experiment.
+        """
+
+        projects = self.dataset_info['projects']
+        project = [proyect for proyect in projects if proyect['id'] == proyect_id][0]
+        return project[field]
 
     def get_gene_names(self):
         return self.gene_names
@@ -139,3 +164,7 @@ class Taxonomy:
     def get_accession_id(self):
         if not self.taxonomy.empty:
             return self.taxonomy.at[0, 'Entry']
+
+    def get_gene_name_v4(self):
+        if not self.taxonomy.empty:
+            return self.taxonomy.at[0, 'Gene Names (ordered locus)']

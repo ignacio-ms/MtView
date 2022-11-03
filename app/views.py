@@ -1,4 +1,5 @@
 import json
+import re
 
 from flask import render_template, request, Response
 
@@ -17,6 +18,7 @@ def index():
     Also in change of managing the gene request form.
     """
 
+    svg_colors = efp.init_colors()
     is_expression = False
     is_taxonomy = False
     gene_found = ''
@@ -24,11 +26,11 @@ def index():
     boxplot = None
     mol = None
     pae = None
-    svg_colors = efp.init_colors()
 
     gene_form = GeneForm()
     if request.method == 'POST':
         gene_found, is_expression, is_taxonomy = validate_gene_form(request)
+        taxonomy.set_experiments()
         boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
         gene_name = request.form['gene_name']
         if is_taxonomy:
@@ -41,7 +43,7 @@ def index():
         'control_card.html',
         title='MtView',
         analysis_tools=values.analysis_tools,
-        experiments=values.experiments,
+        experiments=taxonomy.experiments,
         norm_methods=values.norm_methods,
         right_col=is_expression,
         is_taxonomy=is_taxonomy,
@@ -74,6 +76,6 @@ def update_boxplot():
 
     if request.method == 'POST':
         data = request.json
-        experiment = data['exp_selected']
+        experiment = [re.sub(r'(?is)-.+', '', exp) for exp in data['exp_selected']]
         mode = data['norm_selected']
         return init_boxplot(experiment, mode)

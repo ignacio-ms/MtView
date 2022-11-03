@@ -39,29 +39,26 @@ def init_boxplot(experiment, mode, height=800, width=1200):
     titles = {}
     for c, exp in enumerate(experiment):
         expression = taxonomy.filter_by_experiment(exp)
-        categories = taxonomy.get_experiments_info(exp, 'categories')
-        date = taxonomy.get_experiments_info(exp, 'date')
+        titles[exp] = taxonomy.get_experiments_info(exp, 'categories')
 
-        d = np.zeros(shape=(3, expression.loc[mode].shape[0] // 3))
-        d_aux = np.zeros(shape=(3,))
+        ticks = np.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
+        reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
+        data = expression.loc[mode]
 
-        titles[exp] = str(date) + '-' + exp + '-' + categories[0]
-        ticks = [re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns) if i % 3 == 0]
+        i = 0
+        for tick, rep in reps.items():
+            df = pd.DataFrame(np.array(data[i: i+rep]).reshape(rep, -1), columns=[tick], dtype=float)
+            fig.add_trace(
+                go.Box(
+                    y=df[tick],
+                    name=tick,
+                    marker_color=values.colors[c % 3]
+                )
+            )
+            i += rep
 
-        for i, data in enumerate(expression.loc[mode]):
-            d_aux[i % 3] = data
-            if i % 3 == 2:
-                d[:, i // 3] = d_aux
-                d_aux = np.zeros(shape=(3,))
-
-        d = pd.DataFrame(d, columns=ticks)
-        for i, cols in enumerate(d):
-            fig.add_trace(go.Box(y=d[cols], name=ticks[i], marker_color=values.colors[c % 3]))
-
-    fig.update_layout(height=height, width=width, title=mode + str(titles))
-
-    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return fig_json
+    fig.update_layout(height=height, width=width, title=str(titles))
+    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
 
 def init_pae(size=400):
