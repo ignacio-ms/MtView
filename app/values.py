@@ -14,11 +14,11 @@ analysis_tools = {
 }
 
 img_labels = [
-    'flower', 'pod', 'vegetative_bud',
-    'leaf_with_petiolules', 'petiole', 'stem',
-    'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d',
-    'non_inoculated_root', 'root',
-    'seed_10d', 'seed_12d', 'seed_16d', 'seed_20d', 'seed_24d', 'seed_36d'
+    'flower', 'leaf_bud', 'leaf', 'petiole', 'stem', 'root',
+    'small_pod', 'medium_pod', 'large_pod',
+    'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d', 'nodule_0d'
+    'nitrate_nodule_12h', 'nitrate_nodule_48h',
+    'intra_nodule'
 ]
 
 color_scale = ['#0053D6', '#ECF3FD']

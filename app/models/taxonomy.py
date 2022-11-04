@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 import json
 
-from app import utils
 from app import values
 
 

@@ -18,7 +18,9 @@ def index():
     Also in change of managing the gene request form.
     """
 
-    svg_colors = efp.init_colors()
+    # svg_colors = efp.init_colors()
+    svg_colors = None
+
     is_expression = False
     is_taxonomy = False
     gene_found = ''
