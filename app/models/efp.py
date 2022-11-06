@@ -28,12 +28,24 @@ class efp:
         return {label+'_fill': '#ffffff' for label in values.img_labels}
 
     def read_tissues(self):
+        """
+        Reads tissue localization gene expression data
+        """
+
         self.tissues = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/rnaseq_tissues.tsv'), sep='\t', index_col='gene_name')
 
     def read_symbiosis(self):
+        """
+        Reads tissue localization gene expression data based on nitrogen-fixing symbiosis and nitrate treatment.
+        """
+
         self.symbiosis = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/rnaseq_symbiosis.tsv'), sep='\t', index_col='gene_name')
 
     def init_efp(self, gene_name):
+        """
+        Computes the eFP methods to colour each tissue with its corresponding expression value.
+        """
+
         if gene_name != '':
             expression_t = self.tissues.loc[gene_name]
             ticks_t = np.unique([re.sub(r'(?is)-.+', '', col) for col in self.tissues.columns])
@@ -61,6 +73,7 @@ class efp:
 
             self.fig = self.init_legend(cmap, non_zero)
 
+            cmap.pop(0)
             svg_colors = {e[0] + '_fill': cmap.pop(0) for i, e in enumerate(sorted(self.data.items(), key=lambda kv: (kv[1], kv[0]))) if e[1] > 0}
             svg_colors.update({k + '_fill': '#ffffff' for k, v in self.data.items() if v <= 0})
             return svg_colors
@@ -69,12 +82,16 @@ class efp:
         return self.init_colors()
 
     def init_legend(self, cmap, non_zero):
+        """
+        Creates the eFP legend colormap.
+        """
+
         fig = go.Figure()
 
         aux = sorted(non_zero + [0])
         for i, c in enumerate(cmap):
             fig.add_bar(
-                x=list(sorted(self.data.values())), y=[int(max(sorted(self.data.values())))], marker_color=c,
+                x=list(sorted(self.data.values())), y=[1], marker_color=c,
                 name=aux.pop(0), showlegend=False, hovertemplate=' '
             )
 
@@ -83,6 +100,6 @@ class efp:
             barmode='stack', width=250,
             plot_bgcolor='#F3F3F2', paper_bgcolor='#F3F3F2',
             dragmode=False,
-            title='Expression value'
+            title='Expression value (TMM)'
         )
         return fig
