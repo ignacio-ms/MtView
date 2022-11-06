@@ -21,11 +21,4 @@ img_labels = [
     'intra_nodule'
 ]
 
-cmap = [
-    '#ffffff', '#ffff00', '#ffee00', '#ffdd00', '#ffcc00',
-    '#ffbb00', '#ffaa00', '#ff9900', '#ff8800', '#ff7700',
-    '#ff6600', '#ff5500', '#ff4400', '#ff3300', '#ff2200',
-    '#ff1100', '#ff0000',
-]
-
 color_scale = ['#0053D6', '#ECF3FD']

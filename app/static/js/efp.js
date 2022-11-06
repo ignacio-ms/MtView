@@ -22,8 +22,10 @@ $(document).ready(function () {
 
                 const colors = JSON.parse(data['colors']);
                 for (const id in colors){
-                    let tissue_path = document.getElementById(id);
-                    tissue_path.style.fill = colors[id];
+                    if (id !== 'intra_nodule_fill') {
+                        let tissue_path = document.getElementById(id);
+                        tissue_path.style.fill = colors[id];
+                    }
                 }
             }
         });
