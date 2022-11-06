@@ -1,12 +1,4 @@
 <div id="efp-leg-div" style="visibility: hidden; height: 0; margin: 0 auto;">
-    <div class="chart" id="efp-leg-plot-div">
-        {% if right_col %}
-            <script>
-                let efp_leg = {{ efp_legend | safe }}
-                Plotly.plot('efp-leg-plot-div', efp_leg, {});
-            </script>
-        {% endif %}
-    </div>
     <p>Select normalization method</p>
     <div class="efp-mode-rb">
         {% for norm in norm_methods %}
@@ -17,5 +9,13 @@
             {% endif %}
             <label for=efp-{{ norm }}>{{ norm }}</label>
         {% endfor %}
+    </div>
+    <div class="chart" id="efp-leg-plot-div">
+        {% if right_col %}
+            <script>
+                let efp_leg = {{ efp_legend | safe }}
+                Plotly.plot('efp-leg-plot-div', efp_leg, {});
+            </script>
+        {% endif %}
     </div>
 </div>

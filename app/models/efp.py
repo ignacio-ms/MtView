@@ -102,14 +102,16 @@ class efp:
 
         aux = sorted(non_zero + [0]) if norm == 'tmm' else sorted(non_zero)
         for i, c in enumerate(cmap):
+            name = aux.pop(0)
             fig.add_bar(
                 x=list(sorted(self.data.values())), y=[1], marker_color=c,
-                name=aux.pop(0), showlegend=False, hovertemplate=' '
+                name=name, text=name, textposition='inside',
+                showlegend=False, hovertemplate=' '
             )
 
         fig.update_xaxes(visible=False).update_yaxes(visible=False)
         fig.update_layout(
-            barmode='stack', width=300,
+            barmode='stack', width=300, height=500,
             plot_bgcolor='#F3F3F2', paper_bgcolor='#F3F3F2',
             dragmode=False,
             title=f'Expression value ({norm})'
