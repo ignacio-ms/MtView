@@ -16,9 +16,16 @@ analysis_tools = {
 img_labels = [
     'flower', 'leaf_bud', 'leaf', 'petiole', 'stem', 'root',
     'small_pod', 'medium_pod', 'large_pod',
-    'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d', 'nodule_0d'
+    'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d', 'nodule_0d',
     'nitrate_nodule_12h', 'nitrate_nodule_48h',
     'intra_nodule'
+]
+
+cmap = [
+    '#ffffff', '#ffff00', '#ffee00', '#ffdd00', '#ffcc00',
+    '#ffbb00', '#ffaa00', '#ff9900', '#ff8800', '#ff7700',
+    '#ff6600', '#ff5500', '#ff4400', '#ff3300', '#ff2200',
+    '#ff1100', '#ff0000',
 ]
 
 color_scale = ['#0053D6', '#ECF3FD']

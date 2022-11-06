@@ -1,6 +1,7 @@
 import json
 import re
 
+import plotly
 from flask import render_template, request, Response
 
 from app import app, values
@@ -18,11 +19,10 @@ def index():
     Also in change of managing the gene request form.
     """
 
-    # svg_colors = efp.init_colors()
-    svg_colors = None
-
+    svg_colors = efp.init_colors()
     is_expression = False
     is_taxonomy = False
+    efp_legend = None
     gene_found = ''
     gene_name = ''
     boxplot = None
@@ -34,6 +34,9 @@ def index():
         gene_found, is_expression, is_taxonomy = validate_gene_form(request)
         taxonomy.set_experiments()
         boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
+        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4())
+        if efp.fig is not None:
+            efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
         gene_name = request.form['gene_name']
         if is_taxonomy:
             molecule.set_mol(taxonomy.get_accession_id())
@@ -56,7 +59,8 @@ def index():
         gene_form=gene_form,
         pae=pae,
         mol=mol,
-        svg_colors=svg_colors
+        svg_colors=svg_colors,
+        efp_legend=efp_legend
     )
 
 

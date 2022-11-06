@@ -58,7 +58,7 @@ class Taxonomy:
                 print(self.taxonomy.head())
 
             return True
-        except [IndexError, ValueError]:
+        except Exception:
             print('Gene not found')
             return False
 
