@@ -1,6 +1,6 @@
 function display_molecule(pdb) {
     let elem = $('#af-container');
-    let config = { backgroundColor: 'white', lowerZoomLimit:50, upperZoomLimit: 500 };
+    let config = { backgroundColor: 'white', lowerZoomLimit:50, upperZoomLimit: 600 };
     let viewer = $3Dmol.createViewer(elem, config);
     let rendering = false;
     let skip = false;

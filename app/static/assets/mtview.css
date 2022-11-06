@@ -217,6 +217,33 @@ dt {
 	border-left: 4px solid #ffa400;
 }
 
+.efp-mode-rb {
+    display: table;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.efp-mode-rb label {
+    width: auto;
+	padding: 1rem 2rem;
+	cursor: pointer;
+	background-color: #F3F3F2;
+	color: #000;
+	font-size: 1.2rem;
+	font-weight: 700;
+	transition: background-color ease 0.3s;
+}
+
+.efp-mode-rb [type=radio] {
+    display: none;
+}
+
+.efp-mode-rb [type=radio]:checked + label {
+    background-color: #fff;
+	color: #ffa400;
+	border-left: 4px solid #ffa400;
+}
+
 option:checked {
     background-color: #fff;
     color: #ffa400;

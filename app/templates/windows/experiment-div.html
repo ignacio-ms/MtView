@@ -15,13 +15,13 @@
     <p>Select normalization method</p>
     <div class="mode-rb">
         {% for norm in norm_methods %}
-        {% if norm == 'log2_tmm' %}
-            <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked>
-        {% else %}
-            <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
-        {% endif %}
-        <label for={{ norm }}>{{ norm }}</label>
-    {% endfor %}
+            {% if norm == 'log2_tmm' %}
+                <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }}>
+            {% else %}
+                <input type="radio" id={{ norm }} name="mode-rb" value={{ norm }} checked>
+            {% endif %}
+            <label for={{ norm }}>{{ norm }}</label>
+        {% endfor %}
     </div>
     <div id="loading-plot" style="display: none">
         <img id="img_loading" src="{{ url_for('static', filename='gif/dna_loading.gif')}}" alt="" style="height: 40%; width: 50%">

@@ -33,8 +33,8 @@ def index():
     if request.method == 'POST':
         gene_found, is_expression, is_taxonomy = validate_gene_form(request)
         taxonomy.set_experiments()
-        boxplot = init_boxplot(['SRP362799'], 'log2_tmm')
-        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4())
+        boxplot = init_boxplot(['SRP362799'], 'tmm')
+        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm='tmm')
         if efp.fig is not None:
             efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
         gene_name = request.form['gene_name']
@@ -85,3 +85,20 @@ def update_boxplot():
         experiment = [re.sub(r'(?is)-.+', '', exp) for exp in data['exp_selected']]
         mode = data['norm_selected']
         return init_boxplot(experiment, mode)
+
+
+@app.route('/efp', methods=['GET', 'POST'])
+def update_efp():
+    """
+    Funtion to update the efp with ajax.
+    """
+    if request.method == 'POST':
+        data = request.json
+        mode = data['norm_selected']
+
+        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm=mode)
+
+        efp_legend = None
+        if efp.fig is not None:
+            efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
+        return {'colors': json.dumps(svg_colors), 'plot': efp_legend}
