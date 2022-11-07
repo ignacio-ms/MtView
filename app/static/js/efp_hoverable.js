@@ -1,4 +1,4 @@
-$(document).ready(function () {
+function efp_hover() {
     const efp_legend = document.getElementById('efp-leg-plot-div');
     let prev_colors;
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
             document.getElementById(tissue).style.fill = prev_colors[tissue];
         }
     });
-})
+}
 
 function rgb2hex(rgb) {
     rgb = rgb.slice(

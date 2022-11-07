@@ -27,6 +27,8 @@ $(document).ready(function () {
                         tissue_path.style.fill = colors[id];
                     }
                 }
+
+                efp_hover();
             }
         });
     })
