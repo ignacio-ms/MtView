@@ -244,6 +244,9 @@ dt {
 	border-left: 4px solid #ffa400;
 }
 
+.svg-tissue text{ display: none; }
+.svg-tissue:hover text { display: table; }
+
 option:checked {
     background-color: #fff;
     color: #ffa400;
