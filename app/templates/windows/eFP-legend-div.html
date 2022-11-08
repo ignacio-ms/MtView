@@ -1,23 +1,23 @@
 <div id="efp-leg-div" style="visibility: hidden; height: 0;">
-    <p>Select normalization method</p>
-    <div class="efp-mode-rb">
-        {% for norm in norm_methods %}
-            {% if norm == 'log2_tmm' %}
-                <input type="radio" id=efp-{{ norm }} name="efp-mode-rb" value={{ norm }}>
-            {% else %}
-                <input type="radio" id=efp-{{ norm }} name="efp-mode-rb" value={{ norm }} checked>
-            {% endif %}
-            <label for=efp-{{ norm }}>{{ norm }}</label>
-        {% endfor %}
-    </div>
-    <div class="chart" id="efp-leg-plot-div">
-        {% if right_col %}
+    {% if efp_legend %}
+        <p>Select normalization method</p>
+        <div class="efp-mode-rb">
+            {% for norm in norm_methods %}
+                {% if norm == 'log2_tmm' %}
+                    <input type="radio" id=efp-{{ norm }} name="efp-mode-rb" value={{ norm }}>
+                {% else %}
+                    <input type="radio" id=efp-{{ norm }} name="efp-mode-rb" value={{ norm }} checked>
+                {% endif %}
+                <label for=efp-{{ norm }}>{{ norm }}</label>
+            {% endfor %}
+        </div>
+        <div class="chart" id="efp-leg-plot-div">
             <script>
                 let efp_leg = {{ efp_legend | safe }}
                 Plotly.plot('efp-leg-plot-div', efp_leg, {});
 
                 efp_hover();
             </script>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </div>

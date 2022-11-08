@@ -18,7 +18,6 @@ img_labels = [
     'small_pod', 'medium_pod', 'large_pod',
     'mature_nodule', 'nodule_4d', 'nodule_10d', 'nodule_14d', 'nodule_0d',
     'nitrate_nodule_12h', 'nitrate_nodule_48h',
-    'intra_nodule'
 ]
 
 color_scale = ['#0053D6', '#ECF3FD']
