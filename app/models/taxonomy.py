@@ -125,11 +125,12 @@ class Taxonomy:
                 exp_id, _ = col.split(':')
                 if not [i for i in exp if i.startswith(exp_id)]:
                     date = str(self.get_experiments_info(exp_id, 'date'))
-                    categories = str(self.get_experiments_info(exp_id, 'categories'))
-                    exp.append(exp_id + '-' + date + '-' + categories)
+                    author = values.experiments[exp_id]
+                    exp.append(exp_id + ' - ' + date + ' - ' + author)
+            exp.sort(key=lambda x: x.split('-')[2])
             self.experiments = exp
             return
-        self.experiments = values.experiments
+        self.experiments = []
 
     def get_dataset_info(self):
         """

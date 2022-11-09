@@ -33,7 +33,7 @@ def index():
     if request.method == 'POST':
         gene_found, is_expression, is_taxonomy = validate_gene_form(request)
         taxonomy.set_experiments()
-        boxplot = init_boxplot(['SRP362799'], 'tmm')
+        boxplot = init_boxplot(['SRP109847'], 'tmm')
         svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm='tmm')
         if efp.fig is not None:
             efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)

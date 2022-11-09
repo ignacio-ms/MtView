@@ -39,7 +39,7 @@ def init_boxplot(experiment, mode, height=800, width=1200):
     titles = {}
     for c, exp in enumerate(experiment):
         expression = taxonomy.filter_by_experiment(exp)
-        titles[exp] = taxonomy.get_experiments_info(exp, 'categories')
+        titles[exp] = values.experiments[exp]
 
         ticks = np.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
         reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
