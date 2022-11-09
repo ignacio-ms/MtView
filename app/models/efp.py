@@ -65,11 +65,11 @@ class efp:
 
         if gene_name != '':
             expression_t = self.tissues_tmm.loc[gene_name] if norm == 'tmm' else self.tissues_log2_tmm.loc[gene_name]
-            ticks_t = np.unique([re.sub(r'(?is)-.+', '', col) for col in self.tissues_tmm.columns])
+            ticks_t = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.tissues_tmm.columns])
             self.data = {t: round(np.average([val for item, val in expression_t.items() if item.__contains__(t + '-')]), 2) for t in ticks_t}
 
             expression_s = self.symbiosis_tmm.loc[gene_name] if norm == 'tmm' else self.symbiosis_log2_tmm.loc[gene_name]
-            ticks_s = np.unique([re.sub(r'(?is)-.+', '', col) for col in self.symbiosis_tmm.columns])
+            ticks_s = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.symbiosis_tmm.columns])
             self.data.update({t: round(np.average([val for item, val in expression_s.items() if item.__contains__(t + '-')]), 2) for t in ticks_s})
 
             bins = sorted(np.unique([i for i in self.data.values() if i != 0]))

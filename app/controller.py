@@ -41,7 +41,7 @@ def init_boxplot(experiment, mode, height=800, width=1200):
         expression = taxonomy.filter_by_experiment(exp)
         titles[exp] = values.experiments[exp]
 
-        ticks = np.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
+        ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
         reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
         data = expression.loc[mode]
 
@@ -57,7 +57,10 @@ def init_boxplot(experiment, mode, height=800, width=1200):
             )
             i += rep
 
-    fig.update_layout(height=height, width=width, title=str(titles))
+    fig.update_layout(
+        height=height, width=width,
+        title=str(titles).replace('{', '').replace('}', '').replace('\'', '')
+    )
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
 
