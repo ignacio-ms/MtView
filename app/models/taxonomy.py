@@ -165,4 +165,5 @@ class Taxonomy:
 
     def get_gene_name_v4(self):
         if not self.taxonomy.empty:
-            return self.taxonomy.at[0, 'Gene Names (ordered locus)']
+            gene_name_v4 = self.taxonomy.at[0, 'Gene Names (ordered locus)']
+            return gene_name_v4.split(' ')[0]
