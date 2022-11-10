@@ -2,6 +2,7 @@ import os
 import re
 
 from app import values
+# from app.models import taxonomy
 
 import pandas as pd
 import numpy as np
@@ -12,13 +13,14 @@ from plotly.colors import n_colors
 
 class efp:
 
-    def __init__(self):
+    def __init__(self, taxonomy):
         self.tissues_log2_tmm = pd.DataFrame()
         self.tissues_tmm = pd.DataFrame()
 
         self.symbiosis_tmm = pd.DataFrame()
         self.symbiosis_log2_tmm = pd.DataFrame()
 
+        self.taxonomy = taxonomy
         self.data = {}
         self.fig = None
 
@@ -72,6 +74,8 @@ class efp:
             ticks_s = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.symbiosis_tmm.columns])
             self.data.update({t: round(np.average([val for item, val in expression_s.items() if item.__contains__(t + '-')]), 2) for t in ticks_s})
 
+            self.get_intra_nodule(norm)
+
             bins = sorted(np.unique([i for i in self.data.values() if i != 0]))
             is_zero = [True for i in self.data.values() if i == 0]
 
@@ -91,6 +95,28 @@ class efp:
 
         self.fig = None
         return self.init_colors()
+
+    def get_intra_nodule(self, norm='tmm'):
+        expression = self.taxonomy.filter_by_experiment('SRP028599')
+
+        ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
+        reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
+        expression = expression.loc[norm]
+
+        vals = [
+            'Mt_Sm_RbmL_Nodule_ZI',
+            'Mt_Sm_RbmL_Nodule_ZIId',
+            'Mt_Sm_RbmL_Nodule_ZIIp',
+            'Mt_Sm_RbmL_Nodule_IZ',
+            'Mt_Sm_RbmL_Nodule_ZIII'
+        ]
+
+        i = 0
+        for tick, rep in reps.items():
+            if tick in vals:
+                t = tick.split('_')[4]
+                self.data['intra_nodule_'+t] = round(np.average(np.array(expression[i: i+rep], dtype=float)), 3)
+            i += rep
 
     @staticmethod
     def rgb2hex(rgb):
@@ -124,7 +150,7 @@ class efp:
 
         fig.update_xaxes(visible=False).update_yaxes(visible=False)
         fig.update_layout(
-            barmode='stack', width=300, height=500,
+            barmode='stack', width=300, height=550,
             plot_bgcolor='#F3F3F2', paper_bgcolor='#F3F3F2',
             dragmode=False,
             title=f'Expression value ({norm})'

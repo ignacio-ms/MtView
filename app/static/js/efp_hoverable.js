@@ -21,7 +21,11 @@ function efp_hover() {
             'nodule_0d_fill': document.getElementById('nodule_0d_fill').style.fill,
             'nitrate_nodule_12h_fill': document.getElementById('nitrate_nodule_12h_fill').style.fill,
             'nitrate_nodule_48h_fill': document.getElementById('nitrate_nodule_48h_fill').style.fill,
-            // 'intra_nodule_fill': document.getElementById('intra_nodule_fill').style.fill
+            'intra_nodule_ZI_fill': document.getElementById('intra_nodule_ZI_fill').style.fill,
+            'intra_nodule_ZIIp_fill': document.getElementById('intra_nodule_ZIIp_fill').style.fill,
+            'intra_nodule_ZIId_fill': document.getElementById('intra_nodule_ZIId_fill').style.fill,
+            'intra_nodule_ZIII_fill': document.getElementById('intra_nodule_ZIII_fill').style.fill,
+            'intra_nodule_IZ_fill': document.getElementById('intra_nodule_IZ_fill').style.fill,
         };
 
         for (let tissue in prev_colors){
