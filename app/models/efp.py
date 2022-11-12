@@ -39,25 +39,11 @@ class efp:
 
         self.tissues_tmm = pd.read_csv(
             os.path.join(os.getcwd(), 'app/static/data/rnaseq_tissues_tmm.tsv'),
-            sep='\t', index_col='gene_name'
+            sep='\t', index_col='gene_names'
         )
         self.tissues_log2_tmm = pd.read_csv(
             os.path.join(os.getcwd(), 'app/static/data/rnaseq_tissues_log2_tmm.tsv'),
-            sep='\t', index_col='gene_name'
-        )
-
-    def read_symbiosis(self):
-        """
-        Reads tissue localization gene expression data based on nitrogen-fixing symbiosis and nitrate treatment.
-        """
-
-        self.symbiosis_tmm = pd.read_csv(
-            os.path.join(os.getcwd(), 'app/static/data/rnaseq_symbiosis_tmm.tsv'),
-            sep='\t', index_col='gene_name'
-        )
-        self.symbiosis_log2_tmm = pd.read_csv(
-            os.path.join(os.getcwd(), 'app/static/data/rnaseq_symbiosis_log2_tmm.tsv'),
-            sep='\t', index_col='gene_name'
+            sep='\t', index_col='gene_names'
         )
 
     def init_efp(self, gene_name, norm='tmm'):
@@ -66,13 +52,9 @@ class efp:
         """
 
         if gene_name != '':
-            expression_t = self.tissues_tmm.loc[gene_name] if norm == 'tmm' else self.tissues_log2_tmm.loc[gene_name]
+            expression = self.tissues_tmm.loc[gene_name] if norm == 'tmm' else self.tissues_log2_tmm.loc[gene_name]
             ticks_t = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.tissues_tmm.columns])
-            self.data = {t: round(np.average([val for item, val in expression_t.items() if item.__contains__(t + '-')]), 2) for t in ticks_t}
-
-            expression_s = self.symbiosis_tmm.loc[gene_name] if norm == 'tmm' else self.symbiosis_log2_tmm.loc[gene_name]
-            ticks_s = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.symbiosis_tmm.columns])
-            self.data.update({t: round(np.average([val for item, val in expression_s.items() if item.__contains__(t + '-')]), 2) for t in ticks_s})
+            self.data = {t: round(np.average([val for item, val in expression.items() if item.__contains__(t + '-')]), 2) for t in ticks_t}
 
             self.get_intra_nodule(norm)
 
@@ -97,6 +79,10 @@ class efp:
         return self.init_colors()
 
     def get_intra_nodule(self, norm='tmm'):
+        """
+        Gets expression values of Roux et. al. laser dissection expreiment
+        """
+
         expression = self.taxonomy.filter_by_experiment('SRP028599')
 
         ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])

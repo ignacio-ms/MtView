@@ -8,6 +8,5 @@ taxonomy.get_dataset_info()
 
 efp = efp.efp(taxonomy)
 efp.read_tissues()
-efp.read_symbiosis()
 
 molecule = molecule.Molecule()
