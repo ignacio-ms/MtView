@@ -6,7 +6,6 @@ library(edgeR)
 df <- read.csv('tissue_localization_count.tsv', sep='\t')
 gene_names <- df[,1]
 expression_raw <- data.matrix(df[,-1])
-head(expression_raw)
 
 group <- factor(c(
   'leaf_bud', 'leaf_bud','leaf_bud',
@@ -27,16 +26,15 @@ group <- factor(c(
   'nodule_4', 'nodule_4', 'nodule_4'
 ))
 y <- DGEList(counts = expression_raw, group = group)
+
 # Normalize for library size by calculating scaling factor using TMM (Default method)
 y <- calcNormFactors(y)
 # Normalization factors for each library
 y$samples
-
 # Count per million read (Normalized count)
 norm_counts <- cpm(y)
-head(norm_counts)
 
 expression_tmm <- data.frame(norm_counts)
 expression_tmm$gene_names <- gene_names
-head(expression_tmm)
+
 write_tsv(expression_tmm, file = 'tissue_expression_tmm.txt')

@@ -37,8 +37,6 @@ def init_boxplot(experiment, mode, height=800, width=1200):
     fig = go.Figure()
 
     titles = {}
-    line_avg = []
-    line_x = []
     for c, exp in enumerate(experiment):
         expression = taxonomy.filter_by_experiment(exp)
         titles[exp] = values.experiments[exp]
@@ -49,7 +47,6 @@ def init_boxplot(experiment, mode, height=800, width=1200):
 
         i = 0
         for tick, rep in reps.items():
-            line_avg.append(np.average(np.array(data[i: i+rep], dtype=float)))
             df = pd.DataFrame(np.array(data[i: i+rep]).reshape(rep, -1), columns=[tick], dtype=float)
             fig.add_trace(
                 go.Box(
@@ -59,14 +56,7 @@ def init_boxplot(experiment, mode, height=800, width=1200):
                 )
             )
             i += rep
-            line_x.append(tick)
 
-    fig.add_trace(go.Scatter(
-        x=line_x,
-        y=line_avg,
-        name='Average',
-        mode='lines', line_color='#ffa400'
-    ))
     fig.update_layout(
         height=height, width=width,
         title=str(titles).replace('{', '').replace('}', '').replace('\'', '')
