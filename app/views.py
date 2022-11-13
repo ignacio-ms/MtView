@@ -20,6 +20,7 @@ def index():
     """
 
     svg_colors = efp.init_colors()
+    svg_data = None
     is_expression = False
     is_taxonomy = False
     efp_legend = None
@@ -35,6 +36,7 @@ def index():
         taxonomy.set_experiments()
         boxplot = init_boxplot(['SRP109847'], 'tmm')
         svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm='tmm')
+        svg_data = efp.data
         if efp.fig is not None:
             efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
         gene_name = request.form['gene_name']
@@ -60,6 +62,7 @@ def index():
         pae=pae,
         mol=mol,
         svg_colors=svg_colors,
+        svg_data=svg_data,
         efp_legend=efp_legend
     )
 
@@ -97,8 +100,9 @@ def update_efp():
         mode = data['norm_selected']
 
         svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm=mode)
+        svg_data = efp.data
 
         efp_legend = None
         if efp.fig is not None:
             efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
-        return {'colors': json.dumps(svg_colors), 'plot': efp_legend}
+        return {'colors': json.dumps(svg_colors), 'plot': efp_legend, 'vals': json.dumps(svg_data)}

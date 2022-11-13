@@ -247,6 +247,20 @@ dt {
 .svg-tissue text{ display: none; }
 .svg-tissue:hover text { display: table; }
 
+.tooltip span {
+    display:none;
+    /*width: 220px;*/
+    /*height: 50px;*/
+    width: 100px;
+    height: 25px;
+    position:absolute;
+    overflow:hidden;
+    background-color: #F3F3F2;
+    border-color: #ffa400;
+    border-style: solid;
+    border-width: 2px;
+}
+
 .graph-container {
   display: flex;
   flex-wrap: wrap;

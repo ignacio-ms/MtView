@@ -22,10 +22,15 @@ $(document).ready(function () {
 
                 const colors = JSON.parse(data['colors']);
                 for (const id in colors){
-                    if (id !== 'intra_nodule_fill') {
-                        let tissue_path = document.getElementById(id);
-                        tissue_path.style.fill = colors[id];
-                    }
+                    let tissue_path = document.getElementById(id);
+                    tissue_path.style.fill = colors[id];
+                }
+
+                const vals = JSON.parse(data['vals']);
+                for (const id in vals){
+                    let val_path = document.getElementById(id + '_tip');
+                    val_path.textContent = val_path.textContent.replace(/-?\d+\.\d+/g, vals[id]);
+                    console.log(val_path.textContent);
                 }
 
                 efp_hover();

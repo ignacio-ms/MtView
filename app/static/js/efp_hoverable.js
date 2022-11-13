@@ -42,6 +42,35 @@ function efp_hover() {
     });
 }
 
+function efp_tooltip() {
+    let tooltips = document.querySelectorAll('.tooltip span');
+
+    window.onmousemove = function (e) {
+        let x = (e.clientX + 20) + 'px',
+            y = (e.clientY + 20) + 'px';
+        for (let i = 0; i < tooltips.length; i++) {
+            tooltips[i].style.top = y;
+            tooltips[i].style.left = x;
+        }
+    };
+}
+
+function efp_tooltip_hover(event) {
+    let id_fill = event.target.id;
+
+    let fill = document.getElementById(id_fill);
+    let tooltipSpan = document.getElementById(id_fill.replace('fill', 'tip'));
+    tooltipSpan.style.display = 'block';
+    tooltipSpan.style.borderColor = fill.style.fill;
+}
+
+function efp_tooltip_unhover(event) {
+    let id_fill = event.target.id;
+
+    let tooltipSpan = document.getElementById(id_fill.replace('fill', 'tip'));
+    tooltipSpan.style.display = 'none';
+}
+
 function rgb2hex(rgb) {
     rgb = rgb.slice(
         rgb.indexOf("(") + 1,
