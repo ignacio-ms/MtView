@@ -247,6 +247,20 @@ dt {
 .svg-tissue text{ display: none; }
 .svg-tissue:hover text { display: table; }
 
+.graph-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.graph {
+  width: 50%;
+}
+
+.graph img {
+  width: 100%;
+}
+
 option:checked {
     background-color: #fff;
     color: #ffa400;
