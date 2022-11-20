@@ -59,9 +59,11 @@ function efp_tooltip_hover(event) {
     let id_fill = event.target.id;
 
     let fill = document.getElementById(id_fill);
-    let tooltipSpan = document.getElementById(id_fill.replace('fill', 'tip'));
-    tooltipSpan.style.display = 'block';
-    tooltipSpan.style.borderColor = fill.style.fill;
+    if(fill.style.fill !== 'rgb(255, 255, 255)'){
+        let tooltipSpan = document.getElementById(id_fill.replace('fill', 'tip'));
+        tooltipSpan.style.display = 'block';
+        tooltipSpan.style.borderColor = fill.style.fill;
+    }
 }
 
 function efp_tooltip_unhover(event) {

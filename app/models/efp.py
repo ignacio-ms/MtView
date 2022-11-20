@@ -51,32 +51,62 @@ class efp:
         Computes the eFP methods to colour each tissue with its corresponding expression value.
         """
 
+        self.data = {}  # Reset
+
         if gene_name != '':
             expression = self.tissues_tmm.loc[gene_name] if norm == 'tmm' else self.tissues_log2_tmm.loc[gene_name]
             ticks_t = pd.unique([re.sub(r'(?is)-.+', '', col) for col in self.tissues_tmm.columns])
             self.data = {t: round(np.average([val for item, val in expression.items() if item.__contains__(t + '-')]), 2) for t in ticks_t}
+        else:
+            self.get_inoculated_nodules(norm)
 
-            self.get_intra_nodule(norm)
+        self.get_intra_nodule(norm)
 
-            bins = sorted(np.unique([i for i in self.data.values() if i != 0]))
-            is_zero = [True for i in self.data.values() if i == 0]
+        bins = sorted(np.unique([i for i in self.data.values() if i != 0]))
+        is_zero = [True for i in self.data.values() if i == 0]
 
-            if norm == 'tmm':
-                cmap = ['rgb(255, 255, 255)'] + n_colors('rgb(255, 255, 0)', 'rgb(255, 0, 0)', len(bins), 'rgb')
-            else:
-                bins = sorted(np.unique([i for i in self.data.values()]))
-                cmap = ['rgb(255, 255, 255)'] + n_colors('rgb(0, 0, 255)', 'rgb(255, 0, 0)', len(bins), 'rgb')
-            cmap = [self.rgb2hex(rgb) for rgb in cmap]
-            cmap_dict = {i: c for i, c in enumerate(cmap)}
+        if norm == 'tmm':
+            cmap = ['rgb(255, 255, 255)'] + n_colors('rgb(255, 255, 0)', 'rgb(255, 0, 0)', len(bins), 'rgb')
+        else:
+            bins = sorted(np.unique([i for i in self.data.values()]))
+            cmap = ['rgb(255, 255, 255)'] + n_colors('rgb(0, 0, 255)', 'rgb(255, 0, 0)', len(bins), 'rgb')
+        cmap = [self.rgb2hex(rgb) for rgb in cmap]
+        cmap_dict = {i: c for i, c in enumerate(cmap)}
 
-            colors = [cmap_dict.get(i) for i in np.digitize(sorted(self.data.values()), bins)]
-            svg_colors = {e[0] + '_fill': colors[i] for i, e in enumerate(sorted(self.data.items(), key=lambda kv: (kv[1], kv[0])))}
+        colors = [cmap_dict.get(i) for i in np.digitize(sorted(self.data.values()), bins)]
+        svg_colors = {e[0] + '_fill': colors[i] for i, e in enumerate(sorted(self.data.items(), key=lambda kv: (kv[1], kv[0])))}
+        if gene_name == '':
+            svg_colors.update({label + '_fill': '#ffffff' for label in values.null_img_labels})
 
-            self.fig = self.init_legend(colors, bins, norm, is_zero if norm == 'tmm' else [])
-            return svg_colors
+        self.fig = self.init_legend(colors, bins, norm, is_zero if norm == 'tmm' else [])
+        return svg_colors
 
-        self.fig = None
-        return self.init_colors()
+    def get_inoculated_nodules(self, norm='tmm'):
+        """
+        Gets expression values of Bang et. al. inoculated nodules expreiment
+        """
+
+        expression = self.taxonomy.filter_by_experiment('SRP110143')
+
+        ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
+        reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
+        expression = expression.loc[norm]
+
+        vals = {
+            'MtNod0dpi': 'nodule_0d',
+            'MtNod4dpi': 'nodule_4d',
+            'MtNod10dpi': 'nodule_10d',
+            'MtNod14dpi': 'nodule_14d',
+            'MtNod14dpi_12h': 'nitrate_nodule_12h',
+            'MtNod14dpi_48h': 'nitrate_nodule_48h',
+            'Mt4wkNod': 'mature_nodule'
+        }
+
+        i = 0
+        for tick, rep in reps.items():
+            if tick in vals.keys():
+                self.data[vals[tick]] = round(np.average(np.array(expression[i: i + rep], dtype=float)), 3)
+            i += rep
 
     def get_intra_nodule(self, norm='tmm'):
         """
