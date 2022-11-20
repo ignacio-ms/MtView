@@ -3,6 +3,7 @@ function exp_visibility() {
     const pae_div = document.getElementById('pae-div');
     const pae_legend_div = document.getElementById('pae-info-div');
     const efp_legend_div = document.getElementById('efp-leg-div');
+    const interaction_legend_div = document.getElementById('interaction-legend-div');
 
     const radio_bttns = document.querySelectorAll('input[name="window-rb"]');
     for (const btt of radio_bttns){
@@ -21,6 +22,13 @@ function exp_visibility() {
         if (btt.value === 'eFP'){
             efp_legend_div.style.visibility = btt.checked ? "visible" : "hidden";
             efp_legend_div.style.height = btt.checked ? "auto" : 0;
+        }
+
+        if (btt.value === 'interactions'){
+            reformat_graph();
+
+            interaction_legend_div.style.visibility = btt.checked ? "visible" : "hidden";
+            interaction_legend_div.style.height = btt.checked ? "auto" : 0;
         }
     }
 }

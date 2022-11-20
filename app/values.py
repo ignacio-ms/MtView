@@ -9,7 +9,7 @@ colors = ['slategray', '#ffa400', 'crimson']
 
 analysis_tools = {
     'Taxonomy': 'taxonomy', 'Experiments': 'boxplot',
-    'eFP': 'eFP', 'Molecule viewer': 'molecule'
+    'eFP': 'eFP', 'Molecule viewer': 'molecule', 'Interactions': 'interactions'
 }
 
 img_labels = [

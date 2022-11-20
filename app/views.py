@@ -21,6 +21,7 @@ def index():
 
     svg_colors = efp.init_colors()
     svg_data = None
+    interaction_id = ''
     is_expression = False
     is_taxonomy = False
     efp_legend = None
@@ -44,6 +45,8 @@ def index():
 
         gene_name = request.form['gene_name']
         if is_taxonomy:
+            interaction_id = taxonomy.taxonomy['STRING']
+
             molecule.set_mol(taxonomy.get_accession_id())
             molecule.set_pae(taxonomy.get_accession_id())
             mol = molecule.get_mol()
@@ -57,6 +60,7 @@ def index():
         norm_methods=values.norm_methods,
         right_col=is_expression,
         is_taxonomy=is_taxonomy,
+        interaction_id=interaction_id,
         gene_found=gene_found,
         gene_name=gene_name,
         taxonomy=taxonomy,

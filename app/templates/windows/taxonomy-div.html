@@ -2,10 +2,12 @@
     {% if is_taxonomy %}
         <dl>
             {% for key, val in taxonomy.taxonomy.iteritems() %}
-                {% if val[0] != '' %}
-                    <dt>{{ key }}: </dt>
-                    <dd>{{ val[0] }}</dd>
-                    <br>
+                {% if val[0] != ''%}
+                    {% if key != 'STRING' %}
+                        <dt>{{ key }}: </dt>
+                        <dd>{{ val[0] }}</dd>
+                        <br>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </dl>

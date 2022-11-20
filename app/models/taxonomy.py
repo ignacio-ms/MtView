@@ -38,7 +38,7 @@ class Taxonomy:
 
         gene_name = gene_name.replace(" ", "")  # White spaces fix
 
-        url = f'https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Cdate_modified%2Cid%2Cgene_orf%2Cgene_oln%2Ccc_function%2Ccc_tissue_specificity%2Ccc_induction%2Cgo%2Ccc_subcellular_location%2Clength%2Csequence&format=tsv&query=%28{gene_name}%29'
+        url = f'https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Cdate_modified%2Cid%2Cgene_orf%2Cgene_oln%2Ccc_function%2Ccc_tissue_specificity%2Ccc_induction%2Cgo%2Ccc_subcellular_location%2Clength%2Csequence%2Cxref_string&format=tsv&query=%28{gene_name}%29'
         res = requests.get(url)
         line = res.text.splitlines()
 

@@ -1,0 +1,12 @@
+<div id="interactions-div">
+    {% if interaction_id[0] != '' %}
+        <div id="stringEmbedded" style="padding-top: 10%"></div>
+        <script type="text/javascript">
+            string_API_request("{{ interaction_id[0].split('.')[1].replace(';', '') | safe }}");
+        </script>
+    {% else %}
+        <br>
+        <br>
+        <h5 style="align-items: center">No protein-protein interaction data found for this gene</h5>
+    {% endif %}
+</div>
