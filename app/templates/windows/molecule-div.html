@@ -5,13 +5,15 @@
     {% endif %}
 </div>
 <div id="pae-cont" class="pae-container">
-    {% if mol is not none %}
-        <div class="chart" id="pae-div" style="visibility: hidden; height: 0">
+    <div class="chart" id="pae-div" style="visibility: hidden; height: 0">
+        {% if mol is not none %}
             <script>
                 let pae_gr = {{ pae | safe }}
                 Plotly.plot('pae-div', pae_gr, {})
             </script>
-        </div>
+        {% endif %}
+    </div>
+    {% if mol is not none %}
         <div>
             <br>
             <p>

@@ -47,10 +47,12 @@ def index():
         if is_taxonomy:
             interaction_id = taxonomy.taxonomy['STRING']
 
-            molecule.set_mol(taxonomy.get_accession_id())
-            molecule.set_pae(taxonomy.get_accession_id())
-            mol = molecule.get_mol()
-            pae = init_pae()
+            if molecule.set_mol(taxonomy.get_accession_id()):
+                molecule.set_pae(taxonomy.get_accession_id())
+                mol = molecule.get_mol()
+                pae = init_pae()
+            else:
+                mol, pae = None, None
 
     return render_template(
         'control_card.html',

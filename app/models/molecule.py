@@ -18,10 +18,11 @@ class Molecule:
         res = requests.get(url)
         if res.status_code != 200:
             print('Molecule not found')
-            return
+            return False
 
         print(f'Molecule found with accession id: {accession_id}')
         self.mol = res.text
+        return True
 
     def set_pae(self, accession_id):
         """
