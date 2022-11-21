@@ -166,7 +166,7 @@ class efp:
 
         fig.update_xaxes(visible=False).update_yaxes(visible=False)
         fig.update_layout(
-            barmode='stack', width=300, height=550,
+            barmode='stack', width=300, height=525,
             plot_bgcolor='#F3F3F2', paper_bgcolor='#F3F3F2',
             dragmode=False,
             title=f'Expression value ({norm})'

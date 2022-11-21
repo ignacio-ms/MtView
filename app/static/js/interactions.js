@@ -11,8 +11,3 @@ function string_API_request(id) {
     );
 
 }
-
-// function reformat_graph() {
-//     const logo = document.getElementById('svg_string_logo');
-//     if (logo != null) logo.parentNode.removeChild(logo);
-// }
