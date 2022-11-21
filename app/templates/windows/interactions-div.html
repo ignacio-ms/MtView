@@ -1,8 +1,27 @@
 <div id="interactions-div">
     {% if interaction_id[0] != '' %}
         <div id="stringEmbedded" style="padding-top: 10%"></div>
+        <div id="loading-string-div" style="display: none">
+            <img id="img_loading" src="{{ url_for('static', filename='gif/dna_loading.gif')}}" alt="" style="scale: 35%; height: 40%; width: 50%">
+            <label for="img_loading" style="margin: 0 auto; display: table; background-color: #FFFFFF">Loading interactions...</label>
+        </div>
         <script type="text/javascript">
             string_API_request("{{ interaction_id[0].split('.')[1].replace(';', '') | safe }}");
+
+            $(document).ready(function (){
+                const string_div = document.getElementById('stringEmbedded');
+
+                const interval = setInterval(() => {
+                    if (string_div.innerHTML !== ''){
+                        console.log('change');
+                        $('#loading-string-div').hide();
+                        const logo = document.getElementById('svg_string_logo');
+                        if (logo != null) logo.parentNode.removeChild(logo);
+
+                        clearInterval(interval);
+                    }
+                });
+            })
         </script>
     {% else %}
         <br>

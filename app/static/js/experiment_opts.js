@@ -25,7 +25,7 @@ function exp_visibility() {
         }
 
         if (btt.value === 'interactions'){
-            reformat_graph();
+            // reformat_graph();
 
             interaction_legend_div.style.visibility = btt.checked ? "visible" : "hidden";
             interaction_legend_div.style.height = btt.checked ? "auto" : 0;
