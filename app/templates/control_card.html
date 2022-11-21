@@ -1,8 +1,8 @@
 {% extends 'description_card.html' %}
 {% block control_card %}
-    <div id="control-card">
+    <div id="control-card" style=" width: 100%">
         <form action="/index" method="post" name="gene-form">
-            <label for="gene-in" style="display: table">Enter gene name</label>
+            <label for="gene-in" style="display: table; width: 100%">Enter gene name</label>
                 {{ gene_form.gene_name() }}
             <script>
                 $(function() {

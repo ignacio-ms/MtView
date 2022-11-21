@@ -318,7 +318,6 @@ H5, H3 {
 
 #right-column {
     background-color: #FEFFFE;
-    padding: 0 2rem;
     min-height: calc(100vh - 5.5rem);
     height: 100%;
 }
@@ -415,10 +414,6 @@ H5, H3 {
     #left-column, #right-column {
         width: 100%;
         margin-left: 0;
-    }
-
-    #right-column {
-        padding: 0 0.5rem;
     }
 
     #reset-btn-outer {
