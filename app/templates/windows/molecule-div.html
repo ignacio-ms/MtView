@@ -21,11 +21,10 @@
                     clearInterval(pae_interval);
                 });
 
-                window.onresize = function () {
+                window.addEventListener('resize', function () {
                     layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
                     Plotly.relayout(pae_div, layout);
-                }
-
+                }, true);
             </script>
         {% endif %}
     </div>

@@ -13,9 +13,9 @@
             clearInterval(bp_interval);
         });
 
-        window.onresize = function () {
+        window.addEventListener('resize', function () {
             layout = {width: 0.65 * getWindowSize().width, height: 0.8 * getWindowSize().height};
             Plotly.relayout(bp_div, layout);
-        }
+        }, true);
     </script>
 </div>

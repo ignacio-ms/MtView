@@ -1,4 +1,32 @@
 <div id="efp-leg-div" style="display: none; height: 0;">
+    <script>
+        let getWindowSize = (function() {
+            let docEl = document.documentElement, IS_BODY_ACTING_ROOT = docEl && docEl.clientHeight === 0;
+
+            function isDocumentElementHeightOff () {
+                let d = document, div = d.createElement('div');
+                div.style.height = "2500px";
+                d.body.insertBefore(div, d.body.firstChild);
+                let r = d.documentElement.clientHeight > 2400;
+                d.body.removeChild(div);
+                return r;
+            }
+
+            if (typeof document.clientWidth == "number") {
+                 return function () {
+                    return { width: document.clientWidth, height: document.clientHeight };
+                 };
+            } else if (IS_BODY_ACTING_ROOT || isDocumentElementHeightOff()) {
+                let b = document.body;
+                    return function () {return { width: b.clientWidth, height: b.clientHeight };
+                };
+            } else {
+                return function () {
+                    return { width: docEl.clientWidth, height: docEl.clientHeight };
+                };
+            }
+        })();
+    </script>
     {% if efp_legend %}
         <p>Select normalization method</p>
         <div class="efp-mode-rb">
@@ -13,33 +41,6 @@
         </div>
         <div class="chart" id="efp-leg-plot-div">
             <script>
-                let getWindowSize = (function() {
-                    let docEl = document.documentElement, IS_BODY_ACTING_ROOT = docEl && docEl.clientHeight === 0;
-
-                    function isDocumentElementHeightOff () {
-                        let d = document, div = d.createElement('div');
-                        div.style.height = "2500px";
-                        d.body.insertBefore(div, d.body.firstChild);
-                        let r = d.documentElement.clientHeight > 2400;
-                        d.body.removeChild(div);
-                        return r;
-                    }
-
-                    if (typeof document.clientWidth == "number") {
-                         return function () {
-                            return { width: document.clientWidth, height: document.clientHeight };
-                         };
-                    } else if (IS_BODY_ACTING_ROOT || isDocumentElementHeightOff()) {
-                        let b = document.body;
-                            return function () {return { width: b.clientWidth, height: b.clientHeight };
-                        };
-                    } else {
-                        return function () {
-                            return { width: docEl.clientWidth, height: docEl.clientHeight };
-                        };
-                    }
-                })();
-
                 let efp_leg = {{ efp_legend | safe }};
                 let layout = {width: 0.2 * getWindowSize().width, height: 0.55 * getWindowSize().height};
                 Plotly.plot('efp-leg-plot-div', efp_leg, layout);
@@ -53,11 +54,10 @@
                     clearInterval(efp_interval);
                 });
 
-                window.onresize = function () {
+                window.addEventListener('resize', function () {
                     layout = {width: 0.2 * getWindowSize().width, height: 0.55 * getWindowSize().height};
                     Plotly.relayout(leg_div, layout);
-                }
-
+                }, true);
                 efp_hover();
             </script>
         </div>
