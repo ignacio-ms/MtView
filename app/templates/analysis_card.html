@@ -21,16 +21,16 @@
         <div class="tab-content">{% include 'windows/interactions-div.html' %}</div>
     </div>
 
-    <script>
-        const labels = $('.window-rb label').filter(function () {
-            if (this.style.display !== 'none'){
-                this.style.width = "" + num2str(0.132 * getWindowSize().width) + "px";
-                return this
-            }
-        });
-
-        window.addEventListener('resize', function () {
-            for (let i = 0; i < labels.length; i++) labels[i].style.width = "" + num2str(0.132 * getWindowSize().width) + "px";
-         }, true);
-    </script>
+{#    <script>#}
+{#        const labels = $('.window-rb label').filter(function () {#}
+{#            if (this.style.display !== 'none'){#}
+{#                this.style.width = "" + num2str(0.132 * getWindowSize().width) + "px";#}
+{#                return this#}
+{#            }#}
+{#        });#}
+{##}
+{#        window.addEventListener('resize', function () {#}
+{#            for (let i = 0; i < labels.length; i++) labels[i].style.width = "" + num2str(0.132 * getWindowSize().width) + "px";#}
+{#         }, true);#}
+{#    </script>#}
 </div>
