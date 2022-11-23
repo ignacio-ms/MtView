@@ -24,7 +24,7 @@ def validate_gene_form(synonyms):
 
     fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v5'])
     if not fs_taxonomy:
-        fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v4'])
+        fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v4'].replace('Medtr', 'MTR_'))
         if not fs_taxonomy:
             return 'Gene found', True, False
 

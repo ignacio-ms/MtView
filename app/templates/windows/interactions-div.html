@@ -1,5 +1,5 @@
 <div id="interactions-div">
-    {% if interaction_id[0] != '' %}
+    {% if interaction_id is not none %}
         <div id="stringEmbedded" style="padding-top: 10%"></div>
         <div id="loading-string-div" style="display: none">
             <img id="img_loading" src="{{ url_for('static', filename='gif/dna_loading.gif')}}" alt="" style="scale: 35%; height: 40%; width: 50%">

@@ -10,7 +10,6 @@
     max-width: none;
     max-height: none;
     box-sizing: border-box;
-    position: fixed;
 }
 
 body {
@@ -313,12 +312,14 @@ H5, H3 {
     align-items: center;
     min-height: calc(100vh - 5.5rem);
     height: 100%;
+    position: fixed;
 }
 
 #right-column {
     background-color: #FEFFFE;
     min-height: calc(100vh - 5.5rem);
     height: 100%;
+    float: right;
 }
 
 .table-row {

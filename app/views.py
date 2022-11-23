@@ -21,7 +21,7 @@ def index():
 
     svg_colors = efp.init_colors()
     svg_data = None
-    interaction_id = ''
+    interaction_id = None
     is_expression = False
     is_taxonomy = False
     efp_legend = None
@@ -48,6 +48,8 @@ def index():
 
             if is_taxonomy:
                 interaction_id = taxonomy.taxonomy['STRING']
+                if interaction_id[0] == '':
+                    interaction_id = None
 
                 if molecule.set_mol(taxonomy.get_accession_id()):
                     molecule.set_pae(taxonomy.get_accession_id())
