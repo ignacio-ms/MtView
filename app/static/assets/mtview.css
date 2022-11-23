@@ -61,7 +61,7 @@ dt {
 }
 
 .ui-autocomplete {
-    height: 200px;
+    max-height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -97,6 +97,7 @@ dt {
 	padding: 1rem 2rem;
 	color: #000;
 	background-color: #fff;
+    overflow: auto;
 }
 
 @keyframes scale {
@@ -313,6 +314,7 @@ H5, H3 {
     min-height: calc(100vh - 5.5rem);
     height: 100%;
     position: fixed;
+    overflow-y: auto;
 }
 
 #right-column {
@@ -320,6 +322,7 @@ H5, H3 {
     min-height: calc(100vh - 5.5rem);
     height: 100%;
     float: right;
+    overflow: hidden;
 }
 
 .table-row {
