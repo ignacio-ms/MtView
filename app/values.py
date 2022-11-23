@@ -5,6 +5,11 @@ del_list = [
     'FUNCTION: ', 'TISSUE SPECIFICITY: ', 'INDUCTION: ', 'SUBCELLULAR LOCATION: '
 ]
 
+synonymous_ds = {
+    'IMGA-Mt3.5.5-gene': 'v3.5',
+    'JCVI-Mt4.0v2-gene': 'v4',
+}
+
 colors = ['slategray', '#ffa400', 'crimson']
 
 analysis_tools = {

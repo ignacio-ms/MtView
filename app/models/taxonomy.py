@@ -16,6 +16,7 @@ class Taxonomy:
     def __init__(self):
 
         self.gene_names = pd.DataFrame()
+        self.synonimous = {}
 
         self.taxonomy = pd.DataFrame()
         self.expression = pd.DataFrame()
@@ -30,13 +31,35 @@ class Taxonomy:
 
         self.gene_names = pd.read_csv(os.path.join(os.getcwd(), 'app/static/data/gene_names.tsv'), sep='\t')
 
+    def set_synonymous(self, gene_kw):
+        """
+        Gets all available synonymous of a given gene; v4 & v5 nomination
+        """
+
+        self.synonimous = {}
+        gene_kw = gene_kw.replace(" ", "")  # White spaces fix
+
+        url = f'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset/{gene_kw}/synonymous'
+        res = requests.get(url)
+        if res.status_code == 200:
+            data = json.loads(res.text)
+            if data[0]['synonymous_dataset'] == '':
+                print('Gene not found')
+                return False
+
+            self.synonimous['v5'] = data[0]['locus_tag']
+            for line in data:
+                ds = line['synonymous_dataset']
+                if ds in values.synonymous_ds.keys():
+                    self.synonimous[values.synonymous_ds[ds]] = line['synonymous_id']
+
+            return True
+
     def set_gene_taxonomy(self, gene_name, verbose=False):
         """
         Gets the taxonomy of a single gen from UniProt.
         Data will be estored in self Pandas DataFrame variable taxonomy.
         """
-
-        gene_name = gene_name.replace(" ", "")  # White spaces fix
 
         url = f'https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Cdate_modified%2Cid%2Cgene_orf%2Cgene_oln%2Ccc_function%2Ccc_tissue_specificity%2Ccc_induction%2Cgo%2Ccc_subcellular_location%2Clength%2Csequence%2Cxref_string&format=tsv&query=%28{gene_name}%29'
         res = requests.get(url)
@@ -162,8 +185,3 @@ class Taxonomy:
     def get_accession_id(self):
         if not self.taxonomy.empty:
             return self.taxonomy.at[0, 'Entry']
-
-    def get_gene_name_v4(self):
-        if not self.taxonomy.empty:
-            gene_name_v4 = self.taxonomy.at[0, 'Gene Names (ordered locus)']
-            return gene_name_v4.split(' ')[0]

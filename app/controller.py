@@ -13,18 +13,20 @@ import numpy as np
 import re
 
 
-def validate_gene_form(request):
+def validate_gene_form(synonyms):
     """
     Function to validate the existance of a gene in the differents DDBB via API.
     """
 
-    fs_expression = taxonomy.set_gene_expression(request.form['gene_name'])
+    fs_expression = taxonomy.set_gene_expression(synonyms['v5'])
     if not fs_expression:
         return 'Gene not found', False, False
 
-    fs_taxonomy = taxonomy.set_gene_taxonomy(request.form['gene_name'])
+    fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v5'])
     if not fs_taxonomy:
-        return 'Gene found', True, False
+        fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v4'])
+        if not fs_taxonomy:
+            return 'Gene found', True, False
 
     return 'Gene found', True, True
 

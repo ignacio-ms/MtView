@@ -2,7 +2,7 @@
 {% block control_card %}
     <div id="control-card" style=" width: 100%">
         <form action="/index" method="post" name="gene-form">
-            <label for="gene-in" style="display: table; width: 100%">Enter gene name</label>
+            <label for="gene-in" style="display: table; width: 100%">Enter gene name or synonym</label>
                 {{ gene_form.gene_name() }}
             <script>
                 $(function() {

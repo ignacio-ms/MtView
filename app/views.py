@@ -33,26 +33,30 @@ def index():
 
     gene_form = GeneForm()
     if request.method == 'POST':
-        gene_found, is_expression, is_taxonomy = validate_gene_form(request)
-
-        taxonomy.set_experiments()
-        boxplot = init_boxplot(['SRP109847'], 'tmm')
-
-        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm='tmm')
-        svg_data = efp.data
-        if efp.fig is not None:
-            efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
-
         gene_name = request.form['gene_name']
-        if is_taxonomy:
-            interaction_id = taxonomy.taxonomy['STRING']
+        if taxonomy.set_synonymous(gene_name):
+            gene_found, is_expression, is_taxonomy = validate_gene_form(taxonomy.synonimous)
 
-            if molecule.set_mol(taxonomy.get_accession_id()):
-                molecule.set_pae(taxonomy.get_accession_id())
-                mol = molecule.get_mol()
-                pae = init_pae()
-            else:
-                mol, pae = None, None
+            if is_expression:
+                taxonomy.set_experiments()
+                boxplot = init_boxplot(['SRP109847'], 'tmm')
+
+                svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
+                svg_data = efp.data
+                if efp.fig is not None:
+                    efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+            if is_taxonomy:
+                interaction_id = taxonomy.taxonomy['STRING']
+
+                if molecule.set_mol(taxonomy.get_accession_id()):
+                    molecule.set_pae(taxonomy.get_accession_id())
+                    mol = molecule.get_mol()
+                    pae = init_pae()
+                else:
+                    mol, pae = None, None
+        else:
+            gene_found = 'Gene not found'
 
     return render_template(
         'control_card.html',
