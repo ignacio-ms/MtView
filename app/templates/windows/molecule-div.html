@@ -22,8 +22,10 @@
                 });
 
                 window.addEventListener('resize', function () {
-                    layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
-                    Plotly.relayout(pae_div, layout);
+                    try {
+                        layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
+                        Plotly.relayout(pae_div, layout);
+                    } catch (e) {}
                 }, true);
             </script>
         {% endif %}

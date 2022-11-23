@@ -74,7 +74,6 @@ dt {
 }
 
 .window-rb label {
-    width: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -136,7 +135,7 @@ dt {
 
 	.window-rb label {
 		order: 1;
-		width: 16.6%;
+		/*width: 16.6%;*/
 	}
 
 	.window-rb .tab-content {
