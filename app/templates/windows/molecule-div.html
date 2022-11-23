@@ -8,8 +8,24 @@
     <div class="chart" id="pae-div" style="display: block; height: 0">
         {% if mol is not none %}
             <script>
-                let pae_gr = {{ pae | safe }}
-                Plotly.plot('pae-div', pae_gr, {})
+                let pae_gr = {{ pae | safe }};
+                layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
+                Plotly.plot('pae-div', pae_gr, layout);
+
+                const pae_div = document.getElementById('pae-div');
+
+                const pae_interval = setInterval(() => {
+                    layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
+                    Plotly.relayout(pae_div, layout);
+
+                    clearInterval(pae_interval);
+                });
+
+                window.onresize = function () {
+                    layout = {width: 0.25 * getWindowSize().width, height: 0.4 * getWindowSize().height};
+                    Plotly.relayout(pae_div, layout);
+                }
+
             </script>
         {% endif %}
     </div>

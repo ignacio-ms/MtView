@@ -1,6 +1,21 @@
 <div class="chart" id="boxplot-div">
     <script>
-        let graphs = {{ boxplot | safe }}
-        Plotly.plot('boxplot-div', graphs, {});
+        let graphs = {{ boxplot | safe }};
+        layout = {width: 0.65 * getWindowSize().width, height: 0.8 * getWindowSize().height};
+        Plotly.plot('boxplot-div', graphs, layout);
+
+        const bp_div = document.getElementById('boxplot-div');
+
+        const bp_interval = setInterval(() => {
+            layout = {width: 0.65 * getWindowSize().width, height: 0.8 * getWindowSize().height};
+            Plotly.relayout(bp_div, layout);
+
+            clearInterval(bp_interval);
+        });
+
+        window.onresize = function () {
+            layout = {width: 0.65 * getWindowSize().width, height: 0.8 * getWindowSize().height};
+            Plotly.relayout(bp_div, layout);
+        }
     </script>
 </div>

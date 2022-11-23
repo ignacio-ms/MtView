@@ -31,7 +31,7 @@ def validate_gene_form(synonyms):
     return 'Gene found', True, True
 
 
-def init_boxplot(experiment, mode, height=800, width=1200):
+def init_boxplot(experiment, mode):
     """
     Function to initialize and update the gene expression values boxplot.
     """
@@ -60,7 +60,6 @@ def init_boxplot(experiment, mode, height=800, width=1200):
             i += rep
 
     fig.update_layout(
-        height=height, width=width,
         title=str(titles).replace('{', '').replace('}', '').replace('\'', '')
     )
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
