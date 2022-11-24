@@ -19,6 +19,7 @@
     <script src="{{ url_for('static', filename='js/experiment_opts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/molecule_viewer.js')}}"></script>
     <script src="{{ url_for('static', filename='js/interactions.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/ref_modal.js')}}"></script>
 
     <meta charset="UTF-8">
     <title>{{ title }}</title>
@@ -39,6 +40,16 @@
                 {# Window controller #}
                 <div id="window-controller">
                     {% include 'analysis_card.html' %}
+                </div>
+
+                <div id="citation-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span id="modal-close" class="close">&times;</span>
+                            <h5 style="color: #FFFFFF">Citation and Information</h5>
+                        </div>
+                        <div id="citation-modal-body" class="modal-body"></div>
+                    </div>
                 </div>
             </div>
         {% endif %}
