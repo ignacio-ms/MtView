@@ -31,6 +31,11 @@
         {% include 'windows/molecule-legend-div.html' %}
         {% include 'windows/eFP-legend-div.html' %}
         {% include 'windows/interaction-legend-div.html' %}
-
+    </div>
+    <div id="cc-license-div" style="position: absolute; bottom: 10px; left: 10px; display: none">
+        <div id="cc-references"  style="padding-left: 10px;"></div>
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
+            <img src="{{ url_for('static', filename='SVGs/ccby.svg')}}" alt="ccvy">
+        </a>
     </div>
 {% endblock %}

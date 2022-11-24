@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="23.099998mm"
+   height="19.499998mm"
+   viewBox="0 0 23.099998 19.499998"
+   version="1.1"
+   id="svg482"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview484"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs479" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-65.000001,-30.000001)">
+    <circle
+       style="fill:#000000;stroke-width:0.0885033"
+       id="path538"
+       cx="72.032104"
+       cy="38.051842"
+       r="4.6758013" />
+    <circle
+       style="fill:#ffffff;stroke-width:0.0786119"
+       id="circle540"
+       cx="72.004593"
+       cy="38.024345"
+       r="4.1532116" />
+    <circle
+       style="fill:#000000;stroke-width:0.0885033"
+       id="circle542"
+       cx="82.318855"
+       cy="38.051842"
+       r="4.6758013" />
+    <circle
+       style="fill:#ffffff;stroke-width:0.0786119"
+       id="circle544"
+       cx="82.291359"
+       cy="38.024345"
+       r="4.1532116" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.264583"
+       x="67.754158"
+       y="47.85548"
+       id="text656"><tspan
+         sodipodi:role="line"
+         id="tspan654"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="67.754158"
+         y="47.85548">CC BY 4.0</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="67.754158"
+         y="53.147141"
+         id="tspan708" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.264583"
+       x="69.236794"
+       y="39.599243"
+       id="text720"><tspan
+         sodipodi:role="line"
+         id="tspan722"
+         x="69.236794"
+         y="39.599243">CC </tspan><tspan
+         sodipodi:role="line"
+         id="tspan724"
+         x="69.236794"
+         y="44.890907"></tspan></text>
+    <rect
+       style="fill:#000000;stroke-width:0.217617"
+       id="rect778"
+       width="1.6861326"
+       height="5.5235372"
+       x="81.544861"
+       y="35.990208" />
+    <circle
+       style="fill:#000000;stroke-width:0.264583"
+       id="path784"
+       cx="82.37339"
+       cy="34.987247"
+       r="0.85760188" />
+    <rect
+       style="fill:#000000;stroke-width:0.102902"
+       id="rect786"
+       width="0.813995"
+       height="2.5582695"
+       x="-81.777428"
+       y="35.990208"
+       transform="scale(-1,1)" />
+    <rect
+       style="fill:#000000;stroke-width:0.101047"
+       id="rect788"
+       width="0.78492379"
+       height="2.5582695"
+       x="-83.812416"
+       y="35.990208"
+       transform="scale(-1,1)" />
+  </g>
+</svg>

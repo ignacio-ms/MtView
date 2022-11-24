@@ -20,14 +20,12 @@
                 const leg_div = document.getElementById('efp-leg-plot-div');
 
                 const efp_interval = setInterval(() => {
-                    layout = {width: 0.2 * getWindowSize().width, height: 0.55 * getWindowSize().height};
+                    layout = {width: 0.17 * getWindowSize().width, height: 0.5 * getWindowSize().height};
                     Plotly.relayout(leg_div, layout);
-
-                    clearInterval(efp_interval);
                 });
 
                 window.addEventListener('resize', function () {
-                    layout = {width: 0.2 * getWindowSize().width, height: 0.55 * getWindowSize().height};
+                    layout = {width: 0.17 * getWindowSize().width, height: 0.5 * getWindowSize().height};
                     Plotly.relayout(leg_div, layout);
                 }, true);
                 efp_hover();

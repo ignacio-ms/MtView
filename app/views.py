@@ -114,7 +114,7 @@ def update_efp():
         data = request.json
         mode = data['norm_selected']
 
-        svg_colors = efp.init_efp(taxonomy.get_gene_name_v4(), norm=mode)
+        svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm=mode)
         svg_data = efp.data
 
         efp_legend = None
