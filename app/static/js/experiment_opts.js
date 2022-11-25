@@ -5,9 +5,6 @@ function exp_visibility() {
     const efp_legend_div = document.getElementById('efp-leg-div');
     const interaction_legend_div = document.getElementById('interaction-legend-div');
 
-    const c_div = document.getElementById('cc-references-div');
-    c_div.style.display = "block";
-
     const radio_bttns = document.querySelectorAll('input[name="window-rb"]');
     for (const btt of radio_bttns){
         switch (btt.value) {

@@ -41,18 +41,29 @@
                 <div id="window-controller">
                     {% include 'analysis_card.html' %}
                 </div>
-
-                <div id="citation-modal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <span id="modal-close" class="close">&times;</span>
-                            <h5 style="color: #FFFFFF">Citation and Information</h5>
-                        </div>
-                        <div id="citation-modal-body" class="modal-body"></div>
-                    </div>
-                </div>
             </div>
         {% endif %}
+
+        <div id="citation-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="modal-close" class="close">&times;</span>
+                    <h5 style="color: #FFFFFF">Citation and Information</h5>
+                </div>
+                <div id="citation-modal-body" class="modal-body">
+                    The gene search has autocomplete for genes writen in the version 5 of its nomenclature.<br>
+                    Still, you can also search any gene by synonyms, e.g:<br>
+                    -MtrunA17_Chr7g0274111<br>
+                    -Medtr7g115050<br>
+                    -Psat0s3671g0040<br>
+                    -Medtr_v1_046961<br>
+                    -Mt0036_00188<br>
+                    -MedtrR108_hic.HiC_scaffold_7.4673<br>
+                    Any of those synonyms will search the same gene.<br>
+                    The search may take a bit long as the platform needs to connect to all web services to gather the gene data.<br>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

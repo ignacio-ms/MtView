@@ -53,7 +53,19 @@ class Taxonomy:
                 if ds in values.synonymous_ds.keys():
                     self.synonimous[values.synonymous_ds[ds]] = line['synonymous_id']
 
+            self.set_v4_synonymus()
             return True
+
+    def set_v4_synonymus(self):
+        gene_name = self.synonimous['v5']
+
+        url = f'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset/{gene_name}/synonymous'
+        res = requests.get(url)
+        if res.status_code == 200:
+            data = json.loads(res.text)
+            for line in data:
+                if line['synonymous_dataset'] == 'JCVI-Mt4.0v2-gene':
+                    self.synonimous['v4'] = line['synonymous_id']
 
     def set_gene_taxonomy(self, gene_name, verbose=False):
         """
