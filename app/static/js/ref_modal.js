@@ -63,11 +63,22 @@ function open_modal() {
                         body.innerHTML = "The data came from MtSSPdb"+
                             "<a href='https://mtsspdb.zhaolab.org/atlas-internal/3880/transcript/profile/0' target='_blank'>"+
                             "    <img src='../static/SVGs/nri_logo.png' width='42' height='19' style='vertical-align:middle;border:0;' alt='NRI'>"+
+                            "</a>" +
+                            " and MtExpress"+
+                            "<a href='https://medicago.toulouse.inrae.fr/MtExpress' target='_blank'>"+
+                            "    <img src='../static/SVGs/mtexpress_logo.png' width='42' height='27' style='vertical-align:middle;border:0;' alt='MtExpress'>"+
                             "</a><br>"+
                             "<br>"+
+                            "MtSSPdb Citation<br>"+
                             "Noble Research Institute<br>"+
                             "Developed by The Zao Bioinformatics Lab<br><br>"+
-                            "Data downloaded in raw counts and self normalized in tmm and log2_tmm normalization methods using edgeR.<br>"+
+                            "MtExpress Citation<br>"+
+                            "Authot: Sebastien Carrere<br>"+
+                            "Title: MtExpress, a Comprehensive and Curated RNAseq-based Gene Expression Atlas for the Model Legume Medicago truncatula<br>"+
+                            "In:62.9(2021) - pp:1494-1500<br>"+
+                            "<a href='https://doi.org/10.1093/pcp/pcab110' style='font-style: italic' target='_blank'>Ref</a><br>"+
+                            "<br>"+
+                            "RNA-seq data downloaded in raw counts and self normalized in tmm and log2_tmm normalization methods using edgeR.<br>"+
                             "If a large section of the eFP is uncolored means there is not tissue localization data available of them.<br>"+
                             "You can select both normalization methods, each one is displayed with different colomaps.<br>"+
                             "By hovering the mouse on any tissue, its expression level will be displayed, by hovering the mouse over the legend, " +
@@ -95,8 +106,8 @@ function open_modal() {
                             "In:596(2021) - pp:583-589<br>"+
                             "<a href='https://doi.org/10.1038/s41586-021-03819-2' style='font-style: italic' target='_blank'>Ref</a><br>"+
                             "<br>"+
-                            "AI prediction method using DeepLearning techniques.<br>"+
-                            "Data downloaded from AlphafoldDB (.pdb) and displayed using 3DMol library.<br>"+
+                            "AI structure prediction method using DeepLearning techniques.<br>"+
+                            "Data downloaded from AlphafoldDB (.pdb format) and displayed using 3DMol library.<br>"+
                             "You can move the molecule view by clicking and dragging with the mouse and zoom it with the mouse wheel.<br>"+
                             "Clicking any section of the protein will display the 'sticks and balls' mode of the atoms forming that " +
                             "aminoacid and its neighbours, click it again to unselec the section or chick another one to focus on it.<br>"+
@@ -123,8 +134,8 @@ function open_modal() {
                             "In:47.D1(2019) - pp:D607-D613<br>"+
                             "<a href='https://doi.org/10.1093/nar/gky1131' style='font-style: italic' target='_blank'>Ref</a><br>"+
                             "<br>"+
-                            "Each colored path between proteins represent a evidence of its interaction, proteins without known interaction" +
-                            "may not be really interacting. As more interaction evicences a interaction have, the more reliable is the interaction.<br>"+
+                            "Each colored path between proteins represent a evidence of its interaction, proteins without known interactions " +
+                            "may not be a reliable interaction. As more interaction evicences have an interaction, the more reliable is that interaction.<br>"+
                             "<div id='cc-license-div' style='position: absolute; bottom: 10px; right: 10px'>"+
                             "    <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank'>"+
                             "        <img src='../static/SVGs/ccby.svg' alt='ccvy'>"+
