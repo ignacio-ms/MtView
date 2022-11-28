@@ -8,6 +8,10 @@
                         <dd>{{ val[0] }}</dd>
                         <br>
                     {% endif %}
+                {% elif key == 'Gene Names (ORF)' %}
+                    <dt>{{ key }}: </dt>
+                    <dd>{{ gene_name_v5 }}</dd>
+                    <br>
                 {% endif %}
             {% endfor %}
         </dl>

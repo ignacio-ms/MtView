@@ -48,7 +48,7 @@ function open_modal() {
                             "Data based on RNA-seq experiments aged from 2013 to 2022, normalized in both tmm and log2_tmm normalization methods.<br>"+
                             "You can select one or several experiments to be plotted at the same time and select boths normalization methods.<br>"+
                             "By clicking and dragging inside the plot you can select a section to be zoomed in, double-click to unzoom it.<br>"+
-                            "You can also deplot any experiment section by clicking into its respective square at te right side of the plot."+
+                            "You can also deplot any experiment trace by clicking into its respective square at te right side of the plot, double-click on it to isolate that one trace."+
                             "<br>"+
                             "<div id='cc-license-div' style='position: absolute; bottom: 10px; right: 10px'>"+
                             "    <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank'>"+
@@ -135,7 +135,7 @@ function open_modal() {
                             "<a href='https://doi.org/10.1093/nar/gky1131' style='font-style: italic' target='_blank'>Ref</a><br>"+
                             "<br>"+
                             "Each colored path between proteins represent a evidence of its interaction, proteins without known interactions " +
-                            "may not be a reliable interaction. As more interaction evicences have an interaction, the more reliable is that interaction.<br>"+
+                            "may not be a reliable interaction. As more interaction evicences have an interaction, the more reliable is it.<br>"+
                             "<div id='cc-license-div' style='position: absolute; bottom: 10px; right: 10px'>"+
                             "    <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank'>"+
                             "        <img src='../static/SVGs/ccby.svg' alt='ccvy'>"+

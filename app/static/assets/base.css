@@ -125,12 +125,12 @@ blockquote {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #000000;
+  color: #ffa400;
   text-decoration: none;
   cursor: pointer;
 }
 a:hover {
-  color: #ffa400; }
+  color: #000000; }
 
 
 /* Buttons

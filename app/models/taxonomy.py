@@ -88,6 +88,7 @@ class Taxonomy:
             print(f'Gene found with accession id: {line[0]}')
             self.taxonomy = pd.DataFrame(line.reshape((1, -1)), columns=cols)
             self.taxonomy.at[0, 'Gene Names (ordered locus)'] = self.taxonomy.at[0, 'Gene Names (ordered locus)'].replace('MTR_', 'Medtr')
+            self.taxonomy.at[0, 'Gene Names (ORF)'] = self.synonimous['v5']
 
             if verbose:
                 print(self.taxonomy.head())

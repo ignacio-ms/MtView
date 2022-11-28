@@ -24,6 +24,7 @@ def index():
     interaction_id = None
     is_expression = False
     is_taxonomy = False
+    gene_name_v5 = None
     efp_legend = None
     gene_found = ''
     gene_name = ''
@@ -40,11 +41,13 @@ def index():
             if is_expression:
                 taxonomy.set_experiments()
                 boxplot = init_boxplot(['SRP109847'], 'tmm')
+                gene_name_v5 = taxonomy.synonimous['v5']
 
-                svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
-                svg_data = efp.data
-                if efp.fig is not None:
-                    efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
+                if 'v4' in taxonomy.synonimous:
+                    svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
+                    svg_data = efp.data
+                    if efp.fig is not None:
+                        efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
 
             if is_taxonomy:
                 interaction_id = taxonomy.taxonomy['STRING']
@@ -71,6 +74,7 @@ def index():
         interaction_id=interaction_id,
         gene_found=gene_found,
         gene_name=gene_name,
+        gene_name_v5=gene_name_v5,
         taxonomy=taxonomy,
         boxplot=boxplot,
         gene_form=gene_form,

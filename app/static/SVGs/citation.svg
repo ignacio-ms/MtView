@@ -2,52 +2,84 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="29.299999mm"
+   width="29.1mm"
    height="19.499998mm"
-   viewBox="0 0 29.299999 19.499998"
+   viewBox="0 0 29.1 19.499998"
    version="1.1"
    id="svg482"
+   sodipodi:docname="citation.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:export-filename="citation.svg"
+   inkscape:export-xdpi="107.49488"
+   inkscape:export-ydpi="107.49488"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview484"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="6.1261225"
+     inkscape:cx="34.687521"
+     inkscape:cy="40.319142"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="1672"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs479" />
   <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-58.800001,-30.000001)">
+     transform="translate(-65.000001,-30.000001)">
     <circle
        style="fill:#000000;stroke-width:0.0885033"
        id="path538"
-       cx="78.506477"
-       cy="38.143459"
+       cx="85.891861"
+       cy="38.359406"
        r="4.6758013" />
     <circle
        style="fill:#ffffff;stroke-width:0.0786119"
        id="circle540"
-       cx="78.478966"
-       cy="38.115963"
+       cx="85.864349"
+       cy="38.331909"
        r="4.1532116" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.264583"
-       x="59.029907"
-       y="47.7691"
+       x="65.162796"
+       y="47.72591"
        id="text656"><tspan
+         sodipodi:role="line"
          id="tspan273"
-         x="59.029907"
-         y="47.7691">Citation &amp; Info</tspan><tspan
+         x="65.162796"
+         y="47.72591">Citation &amp; Info</tspan><tspan
+         sodipodi:role="line"
          id="tspan275"
-         x="59.029907"
-         y="53.06076"></tspan></text>
+         x="65.162796"
+         y="53.01757" /></text>
     <text
        xml:space="preserve"
        style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.22692px;font-family:'Calisto MT';-inkscape-font-specification:'Calisto MT, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.338762"
-       x="67.920296"
-       y="55.18478"
+       x="75.11396"
+       y="56.860851"
        id="text720"
        transform="matrix(0.98042617,-0.19827739,0.19839563,0.97984189,0,0)"><tspan
+         sodipodi:role="line"
          id="tspan186"
-         x="67.920296"
-         y="55.18478"
+         x="75.11396"
+         y="56.860851"
          style="stroke-width:0.338762">i</tspan></text>
   </g>
 </svg>
