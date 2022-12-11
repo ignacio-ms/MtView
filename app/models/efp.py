@@ -17,9 +17,6 @@ class efp:
         self.tissues_log2_tmm = pd.DataFrame()
         self.tissues_tmm = pd.DataFrame()
 
-        self.symbiosis_tmm = pd.DataFrame()
-        self.symbiosis_log2_tmm = pd.DataFrame()
-
         self.taxonomy = taxonomy
         self.data = {}
         self.fig = None
