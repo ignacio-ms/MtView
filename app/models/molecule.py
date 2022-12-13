@@ -1,8 +1,6 @@
 import requests
 import json
 
-from app import utils
-
 
 class Molecule:
     def __init__(self):

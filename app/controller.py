@@ -1,89 +1,127 @@
 import json
-import plotly.utils
-
-from app.views import taxonomy, molecule
-from app import values
-
-import plotly.graph_objects as go
-import plotly.express as px
-
-import pandas as pd
-import numpy as np
-
 import re
 
+import plotly
+from flask import render_template, request, Response
 
-def validate_gene_form(synonyms):
+from app import app, values
+from app.models import taxonomy, efp, molecule
+
+from .forms import GeneForm
+from app.utils import validate_gene_form, init_boxplot, init_pae
+
+
+@app.route('/')
+@app.route('/index', methods=['GET', 'POST'])
+def index():
     """
-    Function to validate the existance of a gene in the differents DDBB via API.
-    """
-
-    fs_expression = taxonomy.set_gene_expression(synonyms['v5'])
-    if not fs_expression:
-        return 'Gene not found', False, False
-
-    fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v5'])
-    if not fs_taxonomy:
-        fs_taxonomy = taxonomy.set_gene_taxonomy(synonyms['v4'].replace('Medtr', 'MTR_') if 'v4' in synonyms else synonyms['v5'])
-        if not fs_taxonomy:
-            return 'Gene found', True, False
-
-    return 'Gene found', True, True
-
-
-def init_boxplot(experiment, mode):
-    """
-    Function to initialize and update the gene expression values boxplot.
+    Funtion to render the index.html template with all it's jinja variables.
+    Also in change of managing the gene request form.
     """
 
-    fig = go.Figure()
+    svg_colors = efp.init_colors()
+    svg_data = None
+    interaction_id = None
+    is_expression = False
+    is_taxonomy = False
+    gene_name_v5 = None
+    efp_legend = None
+    gene_found = ''
+    gene_name = ''
+    boxplot = None
+    mol = None
+    pae = None
 
-    titles = {}
-    for c, exp in enumerate(experiment):
-        expression = taxonomy.filter_by_experiment(exp)
-        titles[exp] = values.experiments[exp]
+    gene_form = GeneForm()
+    if request.method == 'POST':
+        gene_name = request.form['gene_name']
+        if taxonomy.set_synonymous(gene_name):
+            gene_found, is_expression, is_taxonomy = validate_gene_form(taxonomy.synonimous)
 
-        ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
-        reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
-        data = expression.loc[mode]
+            if is_expression:
+                taxonomy.set_experiments()
+                boxplot = init_boxplot(['SRP109847'], 'tmm')
+                gene_name_v5 = taxonomy.synonimous['v5']
 
-        i = 0
-        for tick, rep in reps.items():
-            df = pd.DataFrame(np.array(data[i: i+rep]).reshape(rep, -1), columns=[tick], dtype=float)
-            fig.add_trace(
-                go.Box(
-                    y=df[tick],
-                    name=tick,
-                    marker_color=values.colors[c % 3]
-                )
-            )
-            i += rep
+                if 'v4' in taxonomy.synonimous:
+                    svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
+                    svg_data = efp.data
+                    if efp.fig is not None:
+                        efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    fig.update_layout(
-        title=str(titles).replace('{', '').replace('}', '').replace('\'', '')
+            if is_taxonomy:
+                interaction_id = taxonomy.taxonomy['STRING']
+                if interaction_id[0] == '':
+                    interaction_id = None
+
+                if molecule.set_mol(taxonomy.get_accession_id()):
+                    molecule.set_pae(taxonomy.get_accession_id())
+                    mol = molecule.get_mol()
+                    pae = init_pae()
+                else:
+                    mol, pae = None, None
+        else:
+            gene_found = 'Gene not found'
+
+    return render_template(
+        'control_card.html',
+        title='MtView',
+        analysis_tools=values.analysis_tools,
+        experiments=taxonomy.experiments,
+        norm_methods=values.norm_methods,
+        right_col=is_expression,
+        is_taxonomy=is_taxonomy,
+        interaction_id=interaction_id,
+        gene_found=gene_found,
+        gene_name=gene_name,
+        gene_name_v5=gene_name_v5,
+        taxonomy=taxonomy,
+        boxplot=boxplot,
+        gene_form=gene_form,
+        pae=pae,
+        mol=mol,
+        svg_colors=svg_colors,
+        svg_data=svg_data,
+        efp_legend=efp_legend
     )
-    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
 
-def init_pae(size=400):
+@app.route('/search', methods=['GET'])
+def live_search():
     """
-    Function to initialize the molecule Predicted Aligned Error heatmat.
+    Funtion to manage the gene request form autocomplete with all genes available.
     """
 
-    fig = px.imshow(
-        molecule.get_pae(),
-        color_continuous_scale=values.color_scale,
-        labels={'x': 'Scored esidue', 'y': 'Aligned residue', 'color': 'EPE (Angstroms)'}
-    )
+    choices = list(taxonomy.get_gene_names()['locus_tag'])
+    return Response(json.dumps(choices), mimetype='application/json')
 
-    fig.update_xaxes(title='Scored residue').update_yaxes(title='Aligned residue')
-    fig.update_coloraxes(colorbar_title='Angstroms')
-    fig.update_layout(
-        height=size, width=size,
-        title='Predicted aligned error',
-        hovermode="closest",
-        dragmode='select'
-    )
 
-    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return fig_json
+@app.route('/boxplot', methods=['GET', 'POST'])
+def update_boxplot():
+    """
+    Funtion to update the boxplot with ajax.
+    """
+
+    if request.method == 'POST':
+        data = request.json
+        experiment = [re.sub(r'(?is)-.+', '', exp) for exp in data['exp_selected']]
+        mode = data['norm_selected']
+        return init_boxplot(experiment, mode)
+
+
+@app.route('/efp', methods=['GET', 'POST'])
+def update_efp():
+    """
+    Funtion to update the efp with ajax.
+    """
+    if request.method == 'POST':
+        data = request.json
+        mode = data['norm_selected']
+
+        svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm=mode)
+        svg_data = efp.data
+
+        efp_legend = None
+        if efp.fig is not None:
+            efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
+        return {'colors': json.dumps(svg_colors), 'plot': efp_legend, 'vals': json.dumps(svg_data)}
