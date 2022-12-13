@@ -1,6 +1,11 @@
 import requests
 import json
 
+import plotly.express as px
+import plotly.utils
+
+from app import values
+
 
 class Molecule:
     def __init__(self):
@@ -15,10 +20,10 @@ class Molecule:
         url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
         res = requests.get(url)
         if res.status_code != 200:
-            print('Molecule not found')
+            print('Molecule: Molecule not found')
             return False
 
-        print(f'Molecule found with accession id: {accession_id}')
+        print(f'Molecule: Molecule found with accession id: {accession_id}')
         self.mol = res.text
         return True
 
@@ -34,8 +39,25 @@ class Molecule:
 
         self.pae = json.loads(res.text)[0]
 
-    def get_mol(self):
-        return self.mol
+    def init_pae(self, size=400):
+        """
+        Function to initialize the molecule Predicted Aligned Error heatmat.
+        """
 
-    def get_pae(self):
-        return self.pae['predicted_aligned_error']
+        fig = px.imshow(
+            self.pae['predicted_aligned_error'],
+            color_continuous_scale=values.color_scale,
+            labels={'x': 'Scored esidue', 'y': 'Aligned residue', 'color': 'EPE (Angstroms)'}
+        )
+
+        fig.update_xaxes(title='Scored residue').update_yaxes(title='Aligned residue')
+        fig.update_coloraxes(colorbar_title='Angstroms')
+        fig.update_layout(
+            height=size, width=size,
+            title='Predicted aligned error',
+            hovermode="closest",
+            dragmode='select'
+        )
+
+        fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        return fig_json

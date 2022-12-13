@@ -5,10 +5,9 @@ import plotly
 from flask import render_template, request, Response
 
 from app import app, values
-from app.models import taxonomy, efp, molecule
+from app.models import taxonomy, efp, molecule, expression
 
 from .forms import GeneForm
-from app.utils import validate_gene_form, init_boxplot, init_pae
 
 
 @app.route('/')
@@ -19,15 +18,17 @@ def index():
     Also in change of managing the gene request form.
     """
 
-    svg_colors = efp.init_colors()
-    svg_data = None
-    interaction_id = None
     is_expression = False
     is_taxonomy = False
+
     gene_name_v5 = None
-    efp_legend = None
     gene_found = ''
     gene_name = ''
+
+    interaction_id = None
+    svg_colors = efp.init_colors()
+    svg_data = None
+    efp_legend = None
     boxplot = None
     mol = None
     pae = None
@@ -36,11 +37,14 @@ def index():
     if request.method == 'POST':
         gene_name = request.form['gene_name']
         if taxonomy.set_synonymous(gene_name):
-            gene_found, is_expression, is_taxonomy = validate_gene_form(taxonomy.synonimous)
+            is_expression = expression.validate_gene_form_expression(taxonomy.synonimous)
+            gene_found = 'Gene found'
 
             if is_expression:
-                taxonomy.set_experiments()
-                boxplot = init_boxplot(['SRP109847'], 'tmm')
+                is_taxonomy = taxonomy.validate_gene_form_taxonomy(taxonomy.synonimous)
+
+                expression.set_experiments()
+                boxplot = expression.init_boxplot(['SRP109847'], 'tmm')
                 gene_name_v5 = taxonomy.synonimous['v5']
 
                 if 'v4' in taxonomy.synonimous:
@@ -56,8 +60,8 @@ def index():
 
                 if molecule.set_mol(taxonomy.get_accession_id()):
                     molecule.set_pae(taxonomy.get_accession_id())
-                    mol = molecule.get_mol()
-                    pae = init_pae()
+                    mol = molecule.mol
+                    pae = molecule.init_pae()
                 else:
                     mol, pae = None, None
         else:
@@ -67,7 +71,7 @@ def index():
         'control_card.html',
         title='MtView',
         analysis_tools=values.analysis_tools,
-        experiments=taxonomy.experiments,
+        experiments=expression.experiments,
         norm_methods=values.norm_methods,
         right_col=is_expression,
         is_taxonomy=is_taxonomy,
@@ -78,11 +82,11 @@ def index():
         taxonomy=taxonomy,
         boxplot=boxplot,
         gene_form=gene_form,
-        pae=pae,
-        mol=mol,
         svg_colors=svg_colors,
         svg_data=svg_data,
-        efp_legend=efp_legend
+        efp_legend=efp_legend,
+        pae=pae,
+        mol=mol,
     )
 
 
@@ -92,7 +96,7 @@ def live_search():
     Funtion to manage the gene request form autocomplete with all genes available.
     """
 
-    choices = list(taxonomy.get_gene_names()['locus_tag'])
+    choices = list(taxonomy.gene_names['locus_tag'])
     return Response(json.dumps(choices), mimetype='application/json')
 
 
@@ -106,7 +110,7 @@ def update_boxplot():
         data = request.json
         experiment = [re.sub(r'(?is)-.+', '', exp) for exp in data['exp_selected']]
         mode = data['norm_selected']
-        return init_boxplot(experiment, mode)
+        return expression.init_boxplot(experiment, mode)
 
 
 @app.route('/efp', methods=['GET', 'POST'])

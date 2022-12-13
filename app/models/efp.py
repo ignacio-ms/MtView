@@ -2,7 +2,6 @@ import os
 import re
 
 from app import values
-# from app.models import taxonomy
 
 import pandas as pd
 import numpy as np
@@ -13,11 +12,11 @@ from plotly.colors import n_colors
 
 class efp:
 
-    def __init__(self, taxonomy):
+    def __init__(self, expression):
         self.tissues_log2_tmm = pd.DataFrame()
         self.tissues_tmm = pd.DataFrame()
 
-        self.taxonomy = taxonomy
+        self.expression = expression
         self.data = {}
         self.fig = None
 
@@ -83,7 +82,7 @@ class efp:
         Gets expression values of Bang et. al. inoculated nodules expreiment
         """
 
-        expression = self.taxonomy.filter_by_experiment('SRP110143')
+        expression = self.expression.filter_by_experiment('SRP110143')
 
         ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
         reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
@@ -110,7 +109,7 @@ class efp:
         Gets expression values of Roux et. al. laser dissection expreiment
         """
 
-        expression = self.taxonomy.filter_by_experiment('SRP028599')
+        expression = self.expression.filter_by_experiment('SRP028599')
 
         ticks = pd.unique([re.sub(r'(?is)-.+', '', col) for i, col in enumerate(expression.columns)])
         reps = {t: len([col for col in expression.columns if col.__contains__(t + '-')]) for t in ticks}
