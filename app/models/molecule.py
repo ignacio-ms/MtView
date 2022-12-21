@@ -4,7 +4,7 @@ import json
 import plotly.express as px
 import plotly.utils
 
-from app import values
+from app import values, cache
 
 
 class Molecule:
@@ -13,7 +13,7 @@ class Molecule:
         self.mol = None
         self.pae = None
 
-    def set_mol(self, accession_id):
+    def set_mol(self, gene_kw, accession_id):
         """
         Gets the pdb data of the 3d molecule predicted from AplphafoldV2 via API.
         """
@@ -25,9 +25,10 @@ class Molecule:
 
         print(f'Molecule: Molecule found with accession id: {accession_id}')
         self.mol = res.text
+        cache.set(gene_kw + '_mol', self.mol)
         return True
 
-    def set_pae(self, accession_id):
+    def set_pae(self, gene_kw, accession_id):
         """
         Gets the Predicted Aligned Error data of the 3d molecule predicted from AplphafoldV2 via API.
         """
@@ -38,6 +39,19 @@ class Molecule:
             return
 
         self.pae = json.loads(res.text)[0]
+        cache.set(gene_kw + '_pae', self.pae)
+
+    def load_data_from_cache(self, gene_kw):
+        mol = cache.get(gene_kw + '_mol')
+        if mol is not None:
+            self.mol = mol
+
+        pae = cache.get(gene_kw + '_pae')
+        if pae is not None:
+            self.pae = pae
+            return True
+
+        return False
 
     def init_pae(self, size=400):
         """

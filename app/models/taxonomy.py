@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 import json
 
-from app import values
+from app import values, cache
 
 
 class Taxonomy:
@@ -44,15 +44,16 @@ class Taxonomy:
                 return False
 
             self.synonimous['v5'] = data[0]['locus_tag']
+            cache.set(gene_kw, self.synonimous['v5'])
             for line in data:
                 ds = line['synonymous_dataset']
                 if ds in values.synonymous_ds.keys():
                     self.synonimous[values.synonymous_ds[ds]] = line['synonymous_id']
 
-            self.set_v4_synonymus()
+            self.set_v4_synonymus(gene_kw)
             return True
 
-    def set_v4_synonymus(self):
+    def set_v4_synonymus(self, gene_kw):
         gene_name = self.synonimous['v5']
 
         url = f'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset/{gene_name}/synonymous'
@@ -62,8 +63,25 @@ class Taxonomy:
             for line in data:
                 if line['synonymous_dataset'] == 'JCVI-Mt4.0v2-gene':
                     self.synonimous['v4'] = line['synonymous_id']
+                    cache.set(gene_kw + '_v4', line['synonymous_id'])
 
-    def set_gene_taxonomy(self, gene_name, verbose=False):
+    def load_data_from_cache(self, gene_kw):
+        gene_name_v5 = cache.get(gene_kw)
+        if gene_name_v5 is not None:
+            self.synonimous['v5'] = gene_name_v5
+
+        gene_name_v4 = cache.get(gene_kw + '_v4')
+        if gene_name_v4 is not None:
+            self.synonimous['v4'] = gene_name_v4
+
+        taxonomy = cache.get(gene_kw + '_taxonomy')
+        if taxonomy is not None:
+            self.taxonomy = taxonomy
+            return True
+
+        return False
+
+    def set_gene_taxonomy(self, gene_kw, gene_name, verbose=False):
         """
         Gets the taxonomy of a single gen from UniProt.
         Data will be estored in self Pandas DataFrame variable taxonomy.
@@ -86,6 +104,8 @@ class Taxonomy:
             self.taxonomy.at[0, 'Gene Names (ordered locus)'] = self.taxonomy.at[0, 'Gene Names (ordered locus)'].replace('MTR_', 'Medtr')
             self.taxonomy.at[0, 'Gene Names (ORF)'] = self.synonimous['v5']
 
+            cache.set(gene_kw + '_taxonomy', self.taxonomy)
+
             if verbose:
                 print(self.taxonomy.head())
 
@@ -94,15 +114,17 @@ class Taxonomy:
             print(f'Taxonomy: {e}')
             return False
 
-    def validate_gene_form_taxonomy(self, synonyms):
+    def validate_gene_form_taxonomy(self, gene_kw, synonyms):
         """
         Function to validate the existance of a gene in the differents DDBB via API.
         """
 
-        fs_taxonomy = self.set_gene_taxonomy(synonyms['v5'])
+        fs_taxonomy = self.set_gene_taxonomy(gene_kw, synonyms['v5'])
         if not fs_taxonomy:
             fs_taxonomy = self.set_gene_taxonomy(
-                synonyms['v4'].replace('Medtr', 'MTR_') if 'v4' in synonyms else synonyms['v5'])
+                gene_kw,
+                synonyms['v4'].replace('Medtr', 'MTR_') if 'v4' in synonyms else synonyms['v5']
+            )
             if not fs_taxonomy:
                 return False
 

@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import json
 
-from app import values
+from app import values, cache
 
 
 class Expression:
@@ -19,7 +19,7 @@ class Expression:
         self.experiments = []
         self.dataset_info = []
 
-    def set_gene_expression(self, gene_name, verbose=False):
+    def set_gene_expression(self, gene_kw, gene_name, verbose=False):
         """
         Gets expression of a single gen from ExpressionAtlas.
         Data will be estored in self Pandas DataFrame variable expression.
@@ -40,10 +40,19 @@ class Expression:
         log2_tmm = lines[1].split(sep='\t')[1:]
         tmm = lines[3].split(sep='\t')[1:]
         self.expression = pd.DataFrame(list(zip(*zip(log2_tmm, tmm))), columns=cols, index=['log2_tmm', 'tmm'])
+        cache.set(gene_kw + '_expression', self.expression)
 
         if verbose:
             print(self.expression.head())
         return True
+
+    def load_data_from_cache(self, gene_kw):
+        expression = cache.get(gene_kw + '_expression')
+        if expression is not None:
+            self.expression = expression
+            return True
+
+        return False
 
     def filter_by_experiment(self, experiment, verbose=False):
         """
@@ -107,12 +116,12 @@ class Expression:
         project = [proyect for proyect in projects if proyect['id'] == proyect_id][0]
         return project[field]
 
-    def validate_gene_form_expression(self, synonyms):
+    def validate_gene_form_expression(self, gene_kw, synonyms):
         """
         Function to validate the existance of a gene in the differents DDBB via API.
         """
 
-        fs_expression = self.set_gene_expression(synonyms['v5'])
+        fs_expression = self.set_gene_expression(gene_kw, synonyms['v5'])
         if not fs_expression:
             return False
 
