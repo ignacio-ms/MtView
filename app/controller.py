@@ -4,25 +4,10 @@ import re
 import plotly
 from flask import render_template, request, Response
 
-from app import app, values, cache
+from app import app, values
 from app.models import taxonomy, efp, molecule, expression
 
 from .forms import GeneForm
-
-is_expression = False
-is_taxonomy = False
-
-gene_name_v5 = None
-gene_found = ''
-gene_name = ''
-
-interaction_id = None
-svg_colors = efp.init_colors()
-svg_data = None
-efp_legend = None
-boxplot = None
-mol = None
-pae = None
 
 
 @app.route('/')
@@ -33,29 +18,53 @@ def index():
     Also in change of managing the gene request form.
     """
 
-    global is_expression
-    global is_taxonomy
+    is_expression = False
+    is_taxonomy = False
 
-    global gene_name_v5
-    global gene_found
-    global gene_name
+    gene_name_v5 = None
+    gene_found = ''
+    gene_name = ''
 
-    global interaction_id
-    global svg_colors
-    global svg_data
-    global efp_legend
-    global boxplot
-    global mol
-    global pae
+    interaction_id = None
+    svg_colors = efp.init_colors()
+    svg_data = None
+    efp_legend = None
+    boxplot = None
+    mol = None
+    pae = None
 
     gene_form = GeneForm()
     if request.method == 'POST':
         gene_name = request.form['gene_name']
-        res = cache.get(gene_name)
-        if res is None:
-            get_data_api()
-        else:
-            get_data_cache()
+        if taxonomy.set_synonymous(gene_name):
+            is_expression = expression.validate_gene_form_expression(gene_name, taxonomy.synonimous)
+            is_taxonomy = taxonomy.validate_gene_form_taxonomy(gene_name, taxonomy.synonimous)
+            gene_found = 'Gene found'
+
+            if is_expression:
+                expression.set_experiments()
+                boxplot = expression.init_boxplot(['SRP109847'], 'tmm')
+                gene_name_v5 = taxonomy.synonimous['v5']
+
+                if 'v4' in taxonomy.synonimous:
+                    svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
+                else:
+                    svg_colors = efp.init_efp('', norm='tmm')
+                svg_data = efp.data
+                if efp.fig is not None:
+                    efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+            if is_taxonomy:
+                interaction_id = taxonomy.taxonomy['STRING']
+                if interaction_id[0] == '':
+                    interaction_id = None
+
+                if molecule.set_mol(gene_name, taxonomy.get_accession_id()):
+                    molecule.set_pae(gene_name, taxonomy.get_accession_id())
+                    mol = molecule.mol
+                    pae = molecule.init_pae()
+                else:
+                    mol, pae = None, None
 
     return render_template(
         'control_card.html',
@@ -78,117 +87,6 @@ def index():
         pae=pae,
         mol=mol,
     )
-
-
-def get_data_cache():
-    global is_expression
-    global is_taxonomy
-
-    global gene_name_v5
-    global gene_found
-    global gene_name
-
-    global interaction_id
-    global svg_colors
-    global svg_data
-    global efp_legend
-    global boxplot
-    global mol
-    global pae
-
-    print('Loading from cache')
-
-    is_expression = expression.load_data_from_cache(gene_name)
-    is_taxonomy = taxonomy.load_data_from_cache(gene_name)
-    gene_found = 'Gene found'
-
-    if is_expression:
-        expression.set_experiments()
-        boxplot = expression.init_boxplot(['SRP109847'], 'tmm')
-        gene_name_v5 = taxonomy.synonimous['v5']
-
-        if 'v4' in taxonomy.synonimous:
-            svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
-        else:
-            svg_colors = efp.init_efp('', norm='tmm')
-        svg_data = efp.data
-        if efp.fig is not None:
-            efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-    if is_taxonomy:
-        interaction_id = cache.get(gene_name + '_STRING')
-
-        if molecule.load_data_from_cache(gene_name):
-            mol = molecule.mol
-            pae = molecule.init_pae()
-        else:
-            mol, pae = None, None
-
-    return
-
-
-def get_data_api():
-    global is_expression
-    global is_taxonomy
-
-    global gene_name_v5
-    global gene_found
-    global gene_name
-
-    global interaction_id
-    global svg_colors
-    global svg_data
-    global efp_legend
-    global boxplot
-    global mol
-    global pae
-
-    if taxonomy.set_synonymous(gene_name):
-        is_expression = expression.validate_gene_form_expression(gene_name, taxonomy.synonimous)
-        is_taxonomy = taxonomy.validate_gene_form_taxonomy(gene_name, taxonomy.synonimous)
-        gene_found = 'Gene found'
-
-        if is_expression:
-            expression.set_experiments()
-            boxplot = expression.init_boxplot(['SRP109847'], 'tmm')
-            gene_name_v5 = taxonomy.synonimous['v5']
-
-            if 'v4' in taxonomy.synonimous:
-                svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm='tmm')
-            else:
-                svg_colors = efp.init_efp('', norm='tmm')
-            svg_data = efp.data
-            if efp.fig is not None:
-                efp_legend = json.dumps(efp.fig, cls=plotly.utils.PlotlyJSONEncoder)
-
-        if is_taxonomy:
-            interaction_id = taxonomy.taxonomy['STRING']
-            if interaction_id[0] == '':
-                interaction_id = None
-            else:
-                cache.set(gene_name + '_STRING', interaction_id)
-
-            if molecule.set_mol(gene_name, taxonomy.get_accession_id()):
-                molecule.set_pae(gene_name, taxonomy.get_accession_id())
-                mol = molecule.mol
-                pae = molecule.init_pae()
-            else:
-                mol, pae = None, None
-    else:
-        gene_found = 'Gene not found'
-
-        is_expression = False
-        is_taxonomy = False
-
-        gene_name_v5 = None
-
-        interaction_id = None
-        svg_colors = efp.init_colors()
-        svg_data = None
-        efp_legend = None
-        boxplot = None
-        mol = None
-        pae = None
 
 
 @app.route('/search', methods=['GET'])

@@ -27,32 +27,28 @@ class Expression:
 
         gene_name = gene_name.replace(" ", "")  # White spaces fix
 
-        url = f'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset/{gene_name}/byReplicate'
-        res = requests.get(url)
-        lines = res.text.splitlines()[3:]
+        res = cache.get(gene_kw + '_expression')
+        if res is not None:
+            self.expression = res
+        else:
+            url = f'https://lipm-browsers.toulouse.inra.fr/expression-atlas-api/public/v3/zz_complete_dataset/{gene_name}/byReplicate'
+            res = requests.get(url)
+            lines = res.text.splitlines()[3:]
 
-        cols = lines[0].split(sep='\t')[1:]
-        if len(cols) <= 1:  # Check of data availability in Dataset
-            print('Expression: Gene not found.')
-            return False
-        print('Expression: Gene found.')
+            cols = lines[0].split(sep='\t')[1:]
+            if len(cols) <= 1:  # Check of data availability in Dataset
+                print('Expression: Gene not found.')
+                return False
+            print('Expression: Gene found.')
 
-        log2_tmm = lines[1].split(sep='\t')[1:]
-        tmm = lines[3].split(sep='\t')[1:]
-        self.expression = pd.DataFrame(list(zip(*zip(log2_tmm, tmm))), columns=cols, index=['log2_tmm', 'tmm'])
-        cache.set(gene_kw + '_expression', self.expression)
+            log2_tmm = lines[1].split(sep='\t')[1:]
+            tmm = lines[3].split(sep='\t')[1:]
+            self.expression = pd.DataFrame(list(zip(*zip(log2_tmm, tmm))), columns=cols, index=['log2_tmm', 'tmm'])
+            cache.set(gene_kw + '_expression', self.expression)
 
         if verbose:
             print(self.expression.head())
         return True
-
-    def load_data_from_cache(self, gene_kw):
-        expression = cache.get(gene_kw + '_expression')
-        if expression is not None:
-            self.expression = expression
-            return True
-
-        return False
 
     def filter_by_experiment(self, experiment, verbose=False):
         """

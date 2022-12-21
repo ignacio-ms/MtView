@@ -17,15 +17,20 @@ class Molecule:
         """
         Gets the pdb data of the 3d molecule predicted from AplphafoldV2 via API.
         """
-        url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
-        res = requests.get(url)
-        if res.status_code != 200:
-            print('Molecule: Molecule not found')
-            return False
 
-        print(f'Molecule: Molecule found with accession id: {accession_id}')
-        self.mol = res.text
-        cache.set(gene_kw + '_mol', self.mol)
+        res = cache.get(gene_kw + '_mol')
+        if res is not None:
+            self.mol = res
+        else:
+            url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-model_v3.pdb'
+            res = requests.get(url)
+            if res.status_code != 200:
+                print('Molecule: Molecule not found')
+                return False
+
+            print(f'Molecule: Molecule found with accession id: {accession_id}')
+            self.mol = res.text
+            cache.set(gene_kw + '_mol', self.mol)
         return True
 
     def set_pae(self, gene_kw, accession_id):
@@ -33,25 +38,17 @@ class Molecule:
         Gets the Predicted Aligned Error data of the 3d molecule predicted from AplphafoldV2 via API.
         """
 
-        url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-predicted_aligned_error_v3.json'
-        res = requests.get(url)
-        if res.status_code != 200:
-            return
+        res = cache.get(gene_kw + '_pae')
+        if res is not None:
+            self.pae = res
+        else:
+            url = f'https://alphafold.ebi.ac.uk/files/AF-{accession_id}-F1-predicted_aligned_error_v3.json'
+            res = requests.get(url)
+            if res.status_code != 200:
+                return
 
-        self.pae = json.loads(res.text)[0]
-        cache.set(gene_kw + '_pae', self.pae)
-
-    def load_data_from_cache(self, gene_kw):
-        mol = cache.get(gene_kw + '_mol')
-        if mol is not None:
-            self.mol = mol
-
-        pae = cache.get(gene_kw + '_pae')
-        if pae is not None:
-            self.pae = pae
-            return True
-
-        return False
+            self.pae = json.loads(res.text)[0]
+            cache.set(gene_kw + '_pae', self.pae)
 
     def init_pae(self, size=400):
         """
