@@ -66,6 +66,9 @@ def index():
                 else:
                     mol, pae = None, None
 
+        else:
+            gene_found = 'Gene not found'
+
     return render_template(
         'control_card.html',
         title='MtView',
@@ -121,7 +124,10 @@ def update_efp():
         data = request.json
         mode = data['norm_selected']
 
-        svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm=mode)
+        if 'v4' in taxonomy.synonimous:
+            svg_colors = efp.init_efp(taxonomy.synonimous['v4'], norm=mode)
+        else:
+            svg_colors = efp.init_efp('', norm=mode)
         svg_data = efp.data
 
         efp_legend = None

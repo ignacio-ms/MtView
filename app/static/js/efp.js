@@ -30,7 +30,6 @@ $(document).ready(function () {
                 for (const id in vals){
                     let val_path = document.getElementById(id + '_tip');
                     val_path.textContent = val_path.textContent.replace(/-?\d+\.\d+/g, vals[id]);
-                    console.log(val_path.textContent);
                 }
 
                 efp_hover();

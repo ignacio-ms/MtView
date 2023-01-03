@@ -3,11 +3,10 @@ function string_API_request(id) {
     getSTRING(
         'https://version-11-5.string-db.org',
         {
-            'species': '3880',  // Medicago truncatula species id
+            'species': '3880',
             'identifiers': [id],
             'network_flavor': 'evidence',
             'block_structure_pics_in_bubbles': 1
         }
     );
-
 }

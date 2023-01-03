@@ -4,6 +4,6 @@
   "dependencies": {
   },
   "scripts": {
-    "start": "python run.py"
+    "start": "python wsgi.py"
   }
 }
